@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berke Arastaman — Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <div class="load-bar-container">
+      <div class="load-text">LOADING<span class="dots">...</span></div>
+      <div class="load-bar"><div class="load-fill" id="loadFill"></div></div>
+    </div>
+  </div>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- BACKGROUND -->
+  <div class="bg-noise"></div>
+  <div class="diagonal-lines"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">BA<span class="red">.</span></div>
+    <ul class="nav-links">
+      <li><a href="#hero" data-label="01">HOME</a></li>
+      <li><a href="#about" data-label="02">ABOUT</a></li>
+      <li><a href="#skills" data-label="03">SKILLS</a></li>
+      <li><a href="#experience" data-label="04">EXP</a></li>
+      <li><a href="#projects" data-label="05">PROJECTS</a></li>
+      <li><a href="#contact" data-label="06">CONTACT</a></li>
+    </ul>
+    <div class="nav-line"></div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-text">PHANTOM</div>
+    <div class="hero-content">
+      <div class="hero-tag">SOFTWARE DEVELOPER & iOS ENGINEER</div>
+      <h1 class="hero-name">
+        <span class="name-line" data-text="ERCÜMENT">ERCÜMENT</span>
+        <span class="name-line accent" data-text="BERKE">BERKE</span>
+        <span class="name-line" data-text="ARASTAMAN">ARASTAMAN</span>
+      </h1>
+      <p class="hero-sub">Crafting experiences. Building realities.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="p5-btn primary"><span>VIEW WORK</span><div class="btn-deco"></div></a>
+        <a href="#contact" class="p5-btn secondary"><span>CONTACT ME</span></a>
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        <span>SCROLL</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="card-inner">
+        <div class="card-eye"></div>
+        <div class="card-name">BERKE</div>
+        <div class="card-role">iOS · WEB · AI</div>
+        <div class="card-stars">★★★★★</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-tag"><span class="red">///</span> ABOUT</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">WHO AM I<span class="red">?</span></h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>A <span class="highlight">motivated and versatile Software Developer</span> with a strong academic foundation in Computer Education and Instructional Technologies.</p>
+        <p>I apply my expertise in <span class="highlight">web development</span> (HTML5, CSS, JavaScript, PHP), <span class="highlight">iOS mobile development</span> (Swift), and <span class="highlight">AI data preprocessing</span> to innovative projects that create real impact.</p>
+        <div class="about-stats">
+          <div class="stat-item">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Years Coding</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">44+</div>
+            <div class="stat-label">GitHub Repos</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">432h</div>
+            <div class="stat-label">Training</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-card-wrap">
+        <div class="info-card">
+          <div class="info-card-header">PROFILE</div>
+          <div class="info-row"><span class="info-key">NAME</span><span class="info-val">Ercüment Berke Arastaman</span></div>
+          <div class="info-row"><span class="info-key">LOCATION</span><span class="info-val">Ankara, Türkiye</span></div>
+          <div class="info-row"><span class="info-key">EDUCATION</span><span class="info-val">CEIT — Hacettepe University</span></div>
+          <div class="info-row"><span class="info-key">GRADUATION</span><span class="info-val">Expected 2026</span></div>
+          <div class="info-row"><span class="info-key">LANGUAGES</span><span class="info-val">Turkish · English (Advanced)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-tag"><span class="red">///</span> SKILLS</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">ARSENAL<span class="red">.</span></h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category" data-cat="MOBILE & FRONTEND">
+        <div class="cat-header"><span class="cat-num">01</span> MOBILE & FRONTEND</div>
+        <div class="skill-tags">
+          <span class="skill-tag hot">Swift</span>
+          <span class="skill-tag hot">iOS Dev</span>
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">React.js</span>
+        </div>
+      </div>
+      <div class="skill-category" data-cat="BACKEND & DATA">
+        <div class="cat-header"><span class="cat-num">02</span> BACKEND & DATA</div>
+        <div class="skill-tags">
+          <span class="skill-tag">PHP</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">AJAX</span>
+          <span class="skill-tag">Data Preprocessing</span>
+        </div>
+      </div>
+      <div class="skill-category" data-cat="DESIGN & PROCESS">
+        <div class="cat-header"><span class="cat-num">03</span> DESIGN & PROCESS</div>
+        <div class="skill-tags">
+          <span class="skill-tag">UI/UX Design</span>
+          <span class="skill-tag">Responsive Design</span>
+          <span class="skill-tag">SDLC</span>
+        </div>
+      </div>
+      <div class="skill-category" data-cat="SOFT SKILLS">
+        <div class="cat-header"><span class="cat-num">04</span> SOFT SKILLS</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Team Collaboration</span>
+          <span class="skill-tag">Event Management</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-tag"><span class="red">///</span> EXPERIENCE</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">CONFIDENTIAL FILES<span class="red">.</span></h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="exp-timeline">
+
+      <div class="exp-item" data-index="01">
+        <div class="exp-marker"></div>
+        <div class="exp-content">
+          <div class="exp-header">
+            <div class="exp-title">iOS Developer</div>
+            <div class="exp-date">Oct 2025 — Present</div>
+          </div>
+          <div class="exp-company">Self Employed · Remote</div>
+          <ul class="exp-list">
+            <li>Designing and implementing clean, maintainable code architectures for iOS.</li>
+            <li>Building interfaces prioritising exceptional user experience.</li>
+            <li>Post-release performance monitoring, debugging, and version updates.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item" data-index="02">
+        <div class="exp-marker"></div>
+        <div class="exp-content">
+          <div class="exp-header">
+            <div class="exp-title">TEYE Web Platform Developer</div>
+            <div class="exp-date">Feb 2025 — Jul 2025</div>
+          </div>
+          <div class="exp-company">Hacettepe University · Ankara</div>
+          <ul class="exp-list">
+            <li>Developed user-friendly interfaces using HTML5, CSS, and JavaScript.</li>
+            <li>Architected dynamic data flows and server-side operations with PHP.</li>
+            <li>Implemented AJAX integration to minimise page reloads.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item" data-index="03">
+        <div class="exp-marker"></div>
+        <div class="exp-content">
+          <div class="exp-header">
+            <div class="exp-title">AI Data Preprocessing Intern</div>
+            <div class="exp-date">Jul 2024 — Aug 2024</div>
+          </div>
+          <div class="exp-company">SA İNOVASYON · Ankara</div>
+          <ul class="exp-list">
+            <li>Performed audio segmentation and isolation for analysis.</li>
+            <li>Optimised AI model training datasets by improving audio quality.</li>
+            <li>Contributed to high-quality data architecture for AI model backbone.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-tag"><span class="red">///</span> PROJECTS</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">OPERATIONS<span class="red">.</span></h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="projects-grid">
+
+      <a href="https://github.com/Berke-aras/AnimeFansub-Dizi-Film-Platformu" target="_blank" class="project-card">
+        <div class="proj-num">01</div>
+        <div class="proj-title">Anime Fansub Platform</div>
+        <div class="proj-tech">HTML · CSS · JS</div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+      <a href="https://github.com/Berke-aras/HepFit" target="_blank" class="project-card">
+        <div class="proj-num">02</div>
+        <div class="proj-title">HepFit</div>
+        <div class="proj-tech">JavaScript</div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+      <a href="https://github.com/Berke-aras/HuconAnimeOdulleri" target="_blank" class="project-card">
+        <div class="proj-num">03</div>
+        <div class="proj-title">Hucon Anime Awards</div>
+        <div class="proj-tech">JavaScript</div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+      <a href="https://github.com/Berke-aras/PiyasaAnalizUygulamasi" target="_blank" class="project-card">
+        <div class="proj-num">04</div>
+        <div class="proj-title">Market Analysis App</div>
+        <div class="proj-tech">HTML · JS</div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+      <a href="https://github.com/Berke-aras/veri-tabani-ogretici" target="_blank" class="project-card">
+        <div class="proj-num">05</div>
+        <div class="proj-title">Database Teaching Platform</div>
+        <div class="proj-tech">HTML · PHP</div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+      <a href="https://github.com/Berke-aras/berke-chatmate-pro" target="_blank" class="project-card featured">
+        <div class="proj-num">06</div>
+        <div class="proj-title">Berke ChatMate Pro</div>
+        <div class="proj-tech">TypeScript · VS Code Extension</div>
+        <div class="proj-arrow">→</div>
+        <div class="proj-badge">LATEST</div>
+      </a>
+
+    </div>
+    <div class="projects-cta">
+      <a href="https://github.com/Berke-aras" target="_blank" class="p5-btn secondary"><span>ALL PROJECTS ON GITHUB</span></a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-tag"><span class="red">///</span> CONTACT</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">SEND A MESSAGE<span class="red">.</span></h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-links">
+        <a href="mailto:berkearastaman@icloud.com" class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div class="contact-info">
+            <div class="contact-label">EMAIL</div>
+            <div class="contact-val">berkearastaman@icloud.com</div>
+          </div>
+          <div class="contact-arrow">→</div>
+        </a>
+        <a href="https://github.com/Berke-aras" target="_blank" class="contact-item">
+          <div class="contact-icon">⌥</div>
+          <div class="contact-info">
+            <div class="contact-label">GITHUB</div>
+            <div class="contact-val">github.com/Berke-aras</div>
+          </div>
+          <div class="contact-arrow">→</div>
+        </a>
+        <a href="https://www.linkedin.com/in/ercüment-berke-arastaman-98043a1b7" target="_blank" class="contact-item">
+          <div class="contact-icon">in</div>
+          <div class="contact-info">
+            <div class="contact-label">LINKEDIN</div>
+            <div class="contact-val">ercüment-berke-arastaman</div>
+          </div>
+          <div class="contact-arrow">→</div>
+        </a>
+      </div>
+      <div class="contact-deco">
+        <div class="deco-card">
+          <div class="deco-eye"></div>
+          <div class="deco-text">AVAILABLE FOR OPPORTUNITIES</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-text">© 2026 ERCÜMENT BERKE ARASTAMAN</div>
+    <div class="footer-right">ANKARA · TÜRKIYE</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
