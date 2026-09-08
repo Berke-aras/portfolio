@@ -208,7 +208,8 @@
     }
     .menu-title {
       font-family: var(--font-d); font-size: clamp(2rem, 5.5vw, 4.4rem);
-      line-height: .88; color: var(--wht); letter-spacing: .02em;
+      /* Anton's caps are tall: any tighter and the two lines' hard shadows collide */
+      line-height: 1.02; color: var(--wht); letter-spacing: .02em;
       transform: skewX(-11deg) rotate(-2deg);
       text-shadow: 6px 6px 0 var(--blk);
       animation: dropIn .5s var(--snap) both;
@@ -308,7 +309,7 @@
       50%     { transform: translateY(-14px) rotate(3deg); }
     }
     .figure-word {
-      font-family: var(--font-d); font-size: clamp(1.1rem, 2.6vw, 2.2rem); line-height: .95;
+      font-family: var(--font-d); font-size: clamp(1.1rem, 2.6vw, 2.2rem); line-height: 1.04;
       color: var(--wht); text-align: center; letter-spacing: .06em;
       transform: skewX(-11deg) rotate(-3deg);
       text-shadow: 4px 4px 0 var(--blk);
