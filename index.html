@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Berke Arastaman — Portfolio</title>
   <meta name="description" content="Ercüment Berke Arastaman — Software Developer & iOS Engineer. Phantom Thief of code.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,88 +13,76 @@
        PERSONA 5 — DESIGN TOKENS
        ================================================================ */
     :root {
-      --red:        #e60012;
-      --red-dk:     #9d000d;
-      --red-lt:     #ff2b3d;
-      --blk:        #0b0b0b;
-      --ink:        #151515;
-      --ink2:       #1e1e1e;
-      --wht:        #ffffff;
-      --cream:      #f2efe6;
-      --dim:        #a9a49c;
-      --faint:      #5c5952;
-      --yellow:     #ffd200;
+      --red:    #e60012;
+      --red-dk: #9d000d;
+      --red-lt: #ff2b3d;
+      --blk:    #0b0b0b;
+      --ink:    #151515;
+      --ink2:   #1e1e1e;
+      --wht:    #ffffff;
+      --cream:  #f2efe6;
+      --dim:    #a9a49c;
+      --faint:  #5c5952;
+      --yellow: #ffd200;
 
       --font-d: 'Anton', 'Black Han Sans', Impact, sans-serif;
       --font-b: 'Rajdhani', sans-serif;
       --font-m: 'Share Tech Mono', monospace;
 
-      /* P5 motion: hard snap with overshoot */
       --snap: cubic-bezier(0.14, 1.4, 0.36, 1);
       --out:  cubic-bezier(0.16, 1, 0.3, 1);
 
-      /* Torn-paper / cut-out silhouettes */
       --jag-a: polygon(0% 4%, 4% 0%, 96% 2%, 100% 9%, 99% 96%, 94% 100%, 5% 97%, 0% 91%);
       --jag-b: polygon(2% 0%, 100% 5%, 97% 100%, 0% 94%);
-      --jag-c: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
     }
 
     /* ================================================================
-       BASE
+       BASE — the document itself never scrolls. Everything is a screen.
        ================================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 86px;
-      -webkit-font-smoothing: antialiased;
+    html, body {
+      height: 100%; height: 100dvh;
+      overflow: hidden;                 /* no page scrolling, anywhere */
+      overscroll-behavior: none;
     }
     body {
       background: var(--blk);
       color: var(--cream);
       font-family: var(--font-b);
       font-size: 16px;
-      overflow-x: hidden;
+      display: flex; flex-direction: column;
     }
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
-    img { display: block; max-width: 100%; }
-    button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+    button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; text-align: left; }
     :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
-
-    /* Custom cursor only where a real mouse exists */
-    @media (hover: hover) and (pointer: fine) {
-      body { cursor: none; }
-    }
+    @media (hover: hover) and (pointer: fine) { body { cursor: none; } }
 
     /* ================================================================
-       GLOBAL BACKDROP — living diagonal stripes (P5 never sits still)
+       BACKDROP
        ================================================================ */
     .site-bg { position: fixed; inset: 0; z-index: -2; background: var(--blk); pointer-events: none; }
     .site-bg::before {
       content: ''; position: absolute; top: -20%; left: -60%; width: 220%; height: 140%;
-      background: repeating-linear-gradient(
-        115deg,
-        rgba(230,0,18,0.055) 0 42px,
-        rgba(230,0,18,0.0)  42px 118px);
+      background: repeating-linear-gradient(115deg, rgba(230,0,18,.055) 0 42px, rgba(230,0,18,0) 42px 118px);
       animation: bgDrift 22s linear infinite;
     }
     .site-bg::after {
       content: ''; position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(230,0,18,0.10) 1.4px, transparent 1.5px);
+      background-image: radial-gradient(circle, rgba(230,0,18,.10) 1.4px, transparent 1.5px);
       background-size: 14px 14px;
       -webkit-mask-image: linear-gradient(205deg, #000 0%, transparent 60%);
       mask-image: linear-gradient(205deg, #000 0%, transparent 60%);
     }
     @keyframes bgDrift { to { transform: translateX(118px); } }
-
     .noise {
-      position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: 0.03;
+      position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .03;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 150px;
     }
     .scanlines {
       position: fixed; inset: 0; pointer-events: none; z-index: 59;
-      background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.055) 2px 4px);
+      background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,.055) 2px 4px);
     }
 
     /* ================================================================
@@ -104,24 +92,23 @@
       position: fixed; width: 14px; height: 14px; left: -50px; top: -50px;
       background: var(--red); pointer-events: none; z-index: 9999;
       transform: translate(-50%,-50%) rotate(45deg);
-      transition: width .18s var(--out), height .18s var(--out), background .2s;
+      transition: width .18s var(--out), height .18s var(--out);
     }
     .cursor-ring {
       position: fixed; width: 40px; height: 40px; left: -50px; top: -50px;
       border: 2px solid var(--red); pointer-events: none; z-index: 9998;
       transform: translate(-50%,-50%) rotate(45deg); opacity: .55;
-      transition: width .18s var(--out), height .18s var(--out), opacity .2s;
+      transition: width .18s var(--out), height .18s var(--out);
     }
     @media (hover: none), (pointer: coarse) { .cursor, .cursor-ring { display: none; } }
 
     /* ================================================================
-       LOADING SCREEN
+       LOADING
        ================================================================ */
     #loading-screen {
       position: fixed; inset: 0; background: var(--blk); z-index: 10000;
-      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 26px;
-      transition: opacity .5s var(--out), visibility .5s;
-      overflow: hidden;
+      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 22px;
+      transition: opacity .5s var(--out), visibility .5s; overflow: hidden;
     }
     #loading-screen::before {
       content: ''; position: absolute; top: -20%; left: -60%; width: 220%; height: 140%;
@@ -129,63 +116,372 @@
       animation: bgDrift 6s linear infinite;
     }
     #loading-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
-    .load-mask { width: min(320px, 60vw); position: relative; z-index: 1; animation: loadMaskIn .8s var(--snap) both; }
+    .load-mask { width: min(300px, 55vw); position: relative; z-index: 1; animation: loadMaskIn .8s var(--snap) both; }
     @keyframes loadMaskIn { from { opacity: 0; transform: scale(.7) rotate(-10deg); } }
     .load-logo-text {
-      position: relative; z-index: 1;
-      font-family: var(--font-d); font-size: clamp(1.8rem, 6vw, 4rem);
-      color: var(--wht); letter-spacing: .12em; transform: skewX(-9deg);
-      text-shadow: 5px 5px 0 var(--red);
-      animation: flicker 2.4s infinite;
+      position: relative; z-index: 1; font-family: var(--font-d);
+      font-size: clamp(1.6rem, 5.5vw, 3.4rem); color: var(--wht);
+      letter-spacing: .1em; transform: skewX(-9deg); text-shadow: 5px 5px 0 var(--red);
+      animation: flicker 2.4s infinite; text-align: center;
     }
-    @keyframes flicker {
-      0%,90%,100% { opacity: 1; } 92% { opacity: .25; } 94% { opacity: 1; } 96% { opacity: .5; }
-    }
+    @keyframes flicker { 0%,90%,100% { opacity: 1; } 92% { opacity: .25; } 94% { opacity: 1; } 96% { opacity: .5; } }
     .load-bar-wrap {
-      position: relative; z-index: 1;
-      width: min(420px, 78vw); border: 2px solid var(--red); padding: 4px;
-      transform: skewX(-9deg);
+      position: relative; z-index: 1; width: min(400px, 76vw);
+      border: 2px solid var(--red); padding: 4px; transform: skewX(-9deg);
     }
     .load-bar-wrap::before {
-      content: 'NOW LOADING'; position: absolute; top: -22px; left: 2px;
+      content: 'NOW LOADING'; position: absolute; top: -21px; left: 2px;
       font-family: var(--font-m); font-size: 11px; color: var(--red); letter-spacing: .25em;
     }
     .load-fill { height: 9px; background: var(--red); width: 0; transition: width .1s linear; }
-    .load-percent {
-      position: relative; z-index: 1;
-      font-family: var(--font-m); font-size: 13px; color: var(--cream); letter-spacing: .2em;
+    .load-percent { position: relative; z-index: 1; font-family: var(--font-m); font-size: 13px; letter-spacing: .2em; }
+
+    /* ================================================================
+       TOP BAR — always says which menu screen you are on
+       ================================================================ */
+    #topbar {
+      position: relative; z-index: 40; flex: 0 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: clamp(.5rem, 1.4vh, .9rem) clamp(.8rem, 3vw, 2.4rem);
+      background: rgba(11,11,11,.94);
+      border-bottom: 3px solid var(--red);
     }
-    .load-tip {
-      position: absolute; bottom: 34px; z-index: 1;
-      font-family: var(--font-m); font-size: 11px; color: var(--faint); letter-spacing: .3em;
+    #topbar::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -9px; height: 6px;
+      background: repeating-linear-gradient(115deg, var(--red) 0 14px, transparent 14px 30px);
+      opacity: .45; pointer-events: none;
+    }
+    .tb-logo {
+      font-family: var(--font-d); font-size: clamp(1.1rem, 3vw, 1.7rem);
+      color: var(--wht); letter-spacing: .04em; transform: skewX(-11deg);
+      text-shadow: 3px 3px 0 var(--red); flex: 0 0 auto;
+    }
+    /* the breadcrumb doubles as the "you are here" readout */
+    .tb-where {
+      display: flex; align-items: center; gap: 10px; min-width: 0;
+      transform: skewX(-11deg); background: var(--red); padding: 6px 16px;
+      box-shadow: 4px 4px 0 var(--blk);
+    }
+    .tb-where > * { transform: skewX(11deg); }
+    .tb-num { font-family: var(--font-m); font-size: 11px; color: var(--blk); letter-spacing: .1em; }
+    .tb-name {
+      font-family: var(--font-d); font-size: clamp(.85rem, 2.4vw, 1.25rem);
+      color: var(--wht); letter-spacing: .08em; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .tb-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+    .tb-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      background: var(--ink); color: var(--wht);
+      font-family: var(--font-m); font-size: 11px; letter-spacing: .18em;
+      padding: 10px 15px; min-height: 40px; transform: skewX(-11deg);
+      box-shadow: 3px 3px 0 var(--red);
+      transition: background .16s, color .16s, transform .16s var(--snap);
+    }
+    .tb-btn > * { transform: skewX(11deg); }
+    .tb-btn:hover { background: var(--wht); color: var(--blk); transform: skewX(-11deg) translateY(-2px); }
+    .tb-btn.primary { background: var(--red); box-shadow: 3px 3px 0 var(--blk); }
+    .tb-btn.primary:hover { background: var(--wht); color: var(--blk); }
+    .tb-btn .mt-bars { display: flex; flex-direction: column; gap: 3px; }
+    .tb-btn .mt-bars i { display: block; width: 16px; height: 2px; background: currentColor; }
+    .tb-btn .mt-bars i:nth-child(2) { width: 10px; }
+    .tb-btn.hint::after {
+      content: ''; position: absolute; inset: -4px; border: 2px solid var(--wht);
+      animation: hintPulse 1.8s ease-out infinite; pointer-events: none;
+    }
+    .tb-btn.hint { position: relative; }
+    @keyframes hintPulse { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.16); } }
+
+    /* ================================================================
+       STAGE — every screen lives here, absolutely stacked
+       ================================================================ */
+    #stage { position: relative; flex: 1 1 auto; min-height: 0; z-index: 10; }
+    .screen {
+      position: absolute; inset: 0; overflow: hidden;   /* contain the decorative bleed */
+      padding: clamp(.7rem, 2.2vh, 2rem) clamp(.9rem, 4vw, 3.4rem);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      display: flex; flex-direction: column; min-height: 0;
+    }
+    .screen.on {
+      opacity: 1; visibility: visible; pointer-events: auto;
+      animation: screenIn .45s var(--snap) both;
+    }
+    @keyframes screenIn {
+      from { opacity: 0; transform: translateX(46px) skewX(-3deg); }
+      to   { opacity: 1; transform: none; }
+    }
+    .screen-head { flex: 0 0 auto; margin-bottom: clamp(.5rem, 1.6vh, 1.4rem); }
+    .screen-eyebrow {
+      display: flex; width: -webkit-fit-content; width: fit-content; align-items: center;
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .3em;
+      color: var(--wht); background: var(--blk); padding: 6px 14px;
+      transform: skewX(-11deg); border-left: 4px solid var(--red); margin-bottom: .5rem;
+    }
+    .screen-eyebrow span { transform: skewX(11deg); }
+    .screen-title {
+      display: block; width: -webkit-fit-content; width: fit-content;
+      font-family: var(--font-d); font-size: clamp(1.5rem, 4.4vw, 3.4rem);
+      line-height: 1.02; letter-spacing: .03em; color: var(--wht);
+      transform: skewX(-9deg) rotate(-1.4deg);
+      text-shadow: 5px 5px 0 var(--red), 10px 10px 0 rgba(0,0,0,.5);
+    }
+    .screen-title .red { color: var(--red); text-shadow: 5px 5px 0 var(--blk); }
+    .screen-body { flex: 1 1 auto; min-height: 0; }
+
+    /* ================================================================
+       PLATE — the one menu-row component the whole site is built from
+       ================================================================ */
+    .plist { display: flex; flex-direction: column; gap: clamp(4px, .9vh, 12px); min-height: 0; }
+    .pitem { position: relative; display: block; width: 100%; cursor: pointer; }
+    .p-shadow {
+      position: absolute; inset: 0; background: var(--blk); clip-path: var(--jag-b);
+      transform: skewX(-15deg) translate(9px, 8px);
+      opacity: 0; transition: opacity .18s, transform .22s var(--snap);
+    }
+    .p-plate {
+      position: relative; display: block; background: var(--ink);
+      border-left: 5px solid var(--red); clip-path: var(--jag-b);
+      padding: clamp(7px, 1.35vh, 14px) clamp(18px, 3vw, 40px) clamp(7px, 1.35vh, 14px) clamp(13px, 1.8vw, 22px);
+      transform: skewX(-15deg);
+      transition: transform .24s var(--snap), background .16s, border-color .16s;
+    }
+    .p-in { display: flex; align-items: baseline; gap: clamp(9px, 1.4vw, 18px); transform: skewX(15deg); }
+    .p-num { font-family: var(--font-m); font-size: 11px; color: var(--red-lt); flex: 0 0 auto; transition: color .16s; }
+    .p-label {
+      font-family: var(--font-d); font-size: clamp(.95rem, 2.5vw, 1.75rem); line-height: 1.05;
+      letter-spacing: .04em; color: var(--dim); transition: color .16s;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .p-sub {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .22em; color: var(--faint);
+      margin-left: auto; white-space: nowrap; transition: color .16s; flex: 0 0 auto;
+    }
+    .pitem.sel .p-plate { background: var(--wht); border-left-color: var(--blk); transform: skewX(-15deg) translateX(clamp(8px, 1.6vw, 30px)) scale(1.04); }
+    .pitem.sel .p-shadow { opacity: 1; transform: skewX(-15deg) translate(clamp(18px,2.6vw,40px), 11px); }
+    .pitem.sel .p-label { color: var(--blk); }
+    .pitem.sel .p-num, .pitem.sel .p-sub { color: var(--red); }
+
+    /* ================================================================
+       DUAL — list on one side, the selected entry's detail on the other
+       ================================================================ */
+    .dual {
+      display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: clamp(1rem, 3vw, 3rem); height: 100%; min-height: 0; align-items: center;
+    }
+    /* room on the right for the selected plate's shift, scale and skew overhang */
+    .dual-list { min-height: 0; padding-right: 26px; }
+    .detail {
+      position: relative; background: var(--ink2); clip-path: var(--jag-a);
+      border: 1px solid rgba(230,0,18,.25); padding: clamp(.9rem, 2.4vh, 1.8rem) clamp(1rem, 2vw, 1.9rem);
+      min-height: 0; max-height: 100%; overflow: auto; transform: rotate(-.5deg);
+      display: none;
+    }
+    .detail.on { display: block; animation: detailIn .3s var(--out) both; }
+    @keyframes detailIn { from { opacity: 0; transform: rotate(-.5deg) translateX(18px); } }
+    .detail-kicker { font-family: var(--font-m); font-size: 10px; letter-spacing: .26em; color: var(--red); margin-bottom: .5rem; }
+    .detail-title {
+      font-family: var(--font-d); font-size: clamp(1.05rem, 2.5vw, 1.8rem); line-height: 1.06;
+      color: var(--wht); letter-spacing: .03em; transform: skewX(-8deg); margin-bottom: .35rem;
+    }
+    .detail-meta {
+      font-family: var(--font-m); font-size: 11px; letter-spacing: .12em; color: var(--dim);
+      margin-bottom: .85rem; display: flex; flex-wrap: wrap; gap: 6px 14px;
+    }
+    .detail-meta .date { color: var(--wht); background: var(--red); padding: 3px 9px; }
+    .detail-list { display: flex; flex-direction: column; gap: 6px; }
+    .detail-list li {
+      font-size: clamp(13px, 1.15vw, 15px); color: var(--dim); padding-left: 16px;
+      position: relative; line-height: 1.55;
+    }
+    .detail-list li::before { content: '\25B8'; position: absolute; left: 0; color: var(--red); font-size: 11px; }
+    .tagrow { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      padding: 6px 13px; font-family: var(--font-m); font-size: clamp(11px, 1vw, 12px);
+      letter-spacing: .08em; color: var(--dim); background: rgba(255,255,255,.05);
+      transform: skewX(-11deg); transition: background .18s, color .18s, transform .18s var(--snap);
+    }
+    .tag span { display: block; transform: skewX(11deg); }
+    .tag:hover { background: var(--red); color: var(--wht); transform: skewX(-11deg) translateY(-2px); }
+    .tag.hot { background: rgba(230,0,18,.2); color: var(--red-lt); }
+
+    /* ================================================================
+       P5 BUTTON
+       ================================================================ */
+    .p5-btn {
+      position: relative; display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-m); font-size: 12px; letter-spacing: .18em;
+      padding: 13px 24px; min-height: 44px; cursor: pointer; transform: skewX(-11deg);
+      transition: transform .2s var(--snap), background .2s, color .2s, box-shadow .2s;
+    }
+    .p5-btn > * { display: block; transform: skewX(11deg); }
+    .detail .p5-btn { max-width: 100%; }
+    .p5-btn.primary { background: var(--red); color: var(--wht); box-shadow: 5px 5px 0 var(--blk); }
+    .p5-btn.primary:hover { background: var(--wht); color: var(--blk); transform: skewX(-11deg) translate(-2px,-2px); box-shadow: 8px 8px 0 var(--red); }
+    .p5-btn.secondary { background: var(--ink); color: var(--wht); box-shadow: 5px 5px 0 var(--red); }
+    .p5-btn.secondary:hover { background: var(--wht); color: var(--blk); transform: skewX(-11deg) translate(-2px,-2px); box-shadow: 8px 8px 0 var(--blk); }
+
+    /* ================================================================
+       HOME SCREEN
+       ================================================================ */
+    #s-home .screen-body { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; }
+    .home-bg-word {
+      position: absolute; right: -3%; top: 50%; transform: translateY(-50%) skewX(-9deg);
+      font-family: var(--font-d); font-size: clamp(5rem, 15vw, 15rem);
+      color: transparent; -webkit-text-stroke: 1px rgba(230,0,18,.10);
+      pointer-events: none; user-select: none; white-space: nowrap; z-index: -1;
+    }
+    .home-eyebrow {
+      display: inline-flex; align-items: center;
+      font-family: var(--font-m); font-size: clamp(10px, 1.1vw, 12px); letter-spacing: .26em;
+      color: var(--wht); background: var(--red); padding: 7px 16px;
+      margin-bottom: clamp(.6rem, 2vh, 1.4rem); transform: skewX(-11deg); box-shadow: 4px 4px 0 var(--blk);
+    }
+    .home-eyebrow span { transform: skewX(11deg); }
+    .home-name {
+      font-family: var(--font-d); font-size: clamp(2rem, 6.4vw, 5.4rem);
+      line-height: 1.0; letter-spacing: .02em; margin-bottom: clamp(.5rem, 1.6vh, 1.2rem);
+    }
+    .name-line { display: block; transform: skewX(-9deg); text-shadow: 5px 5px 0 var(--blk); }
+    .name-line.red { color: var(--red); }
+    .home-sub {
+      font-size: clamp(14px, 1.4vw, 19px); color: var(--dim);
+      margin-bottom: clamp(.8rem, 2.4vh, 2rem); letter-spacing: .05em;
+    }
+    .home-btns { display: flex; gap: clamp(.7rem, 1.6vw, 1.4rem); flex-wrap: wrap; }
+
+    .pt-card {
+      width: clamp(180px, 17vw, 250px); aspect-ratio: 26/40; position: relative;
+      transform-style: preserve-3d; cursor: pointer;
+      transition: transform .8s var(--out); animation: cardFloat 6s ease-in-out infinite;
+    }
+    .pt-card:hover, .pt-card:focus-visible { transform: rotateY(180deg); animation: none; }
+    .pt-card-front, .pt-card-back {
+      position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      clip-path: var(--jag-a); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 4%; padding: 8%;
+    }
+    .pt-card-front { background: var(--ink); border: 2px solid var(--red); box-shadow: 0 0 50px rgba(230,0,18,.25); }
+    .pt-card-eye { width: 46%; }
+    .pt-card-name { font-family: var(--font-d); font-size: clamp(1.2rem, 1.7vw, 2rem); color: var(--wht); letter-spacing: .12em; transform: skewX(-9deg); }
+    .pt-card-role { font-family: var(--font-m); font-size: clamp(9px, .8vw, 11px); color: var(--red); letter-spacing: .26em; text-align: center; }
+    .pt-card-stars { color: var(--yellow); font-size: clamp(13px, 1.2vw, 18px); letter-spacing: 4px; }
+    .pt-card-back { background: var(--red); transform: rotateY(180deg); }
+    .card-back-symbol { font-size: clamp(2rem, 3vw, 3.4rem); }
+    .card-back-title { font-family: var(--font-d); font-size: clamp(1.1rem, 1.6vw, 1.8rem); color: var(--blk); letter-spacing: .12em; transform: skewX(-9deg); }
+    .card-back-sub { font-family: var(--font-m); font-size: clamp(9px, .8vw, 11px); color: rgba(0,0,0,.65); letter-spacing: .35em; }
+    @keyframes cardFloat { 0%,100% { transform: translateY(0) rotate(-2.5deg); } 50% { transform: translateY(-16px) rotate(2.5deg); } }
+
+    /* ================================================================
+       ABOUT SCREEN
+       ================================================================ */
+    #s-about .screen-body {
+      display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap: clamp(1rem, 3vw, 3rem); align-items: center; height: 100%; min-height: 0;
+    }
+    .about-copy { min-height: 0; }
+    .about-copy p {
+      font-size: clamp(13px, 1.15vw, 17px); line-height: 1.65; color: var(--dim);
+      margin-bottom: clamp(.5rem, 1.4vh, 1.1rem); max-width: 54ch;
+    }
+    .about-copy .hl { color: var(--wht); font-weight: 600; background: linear-gradient(transparent 62%, rgba(230,0,18,.55) 62%); }
+    .about-stats { display: flex; gap: clamp(.6rem, 1.4vw, 1.4rem); margin-top: clamp(.6rem, 1.8vh, 1.6rem); flex-wrap: wrap; }
+    .stat-box {
+      position: relative; padding: clamp(9px, 1.6vh, 18px) clamp(13px, 1.5vw, 24px);
+      background: var(--ink2); border-left: 5px solid var(--red);
+      clip-path: var(--jag-b); transform: skewX(-9deg); box-shadow: 5px 5px 0 rgba(230,0,18,.28);
+    }
+    .stat-box > * { transform: skewX(9deg); }
+    .stat-num { font-family: var(--font-d); font-size: clamp(1.3rem, 2.4vw, 2.6rem); color: var(--red); line-height: 1; }
+    .stat-label { font-family: var(--font-m); font-size: 9px; letter-spacing: .18em; color: var(--faint); margin-top: 4px; text-transform: uppercase; }
+
+    .profile-card {
+      background: var(--ink2); clip-path: var(--jag-a);
+      border: 1px solid rgba(230,0,18,.25); overflow: hidden; transform: rotate(-.7deg);
+      max-height: 100%;
+    }
+    .profile-card-header {
+      background: var(--red); padding: clamp(9px, 1.5vh, 15px) 20px; color: var(--blk);
+      font-family: var(--font-d); font-size: clamp(.85rem, 1.3vw, 1.15rem); letter-spacing: .2em;
+    }
+    .profile-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: clamp(7px, 1.35vh, 15px) 20px;
+      border-bottom: 1px solid rgba(255,255,255,.05); transition: background .2s, padding-left .2s;
+    }
+    .profile-row:hover { background: rgba(230,0,18,.08); padding-left: 28px; }
+    .profile-row:last-child { border-bottom: none; }
+    .profile-key { font-family: var(--font-m); font-size: 9px; letter-spacing: .18em; color: var(--red); min-width: 92px; flex: 0 0 auto; }
+    .profile-val { font-size: clamp(12px, 1vw, 14px); color: var(--dim); letter-spacing: .03em; }
+
+    /* ================================================================
+       CONTACT SCREEN — availability card beside the channel list
+       ================================================================ */
+    .available-card {
+      background: var(--ink2); padding: clamp(1rem, 2.6vh, 2rem); position: relative;
+      clip-path: var(--jag-a); border: 1px solid rgba(230,0,18,.25); transform: rotate(.6deg);
+    }
+    .available-dot {
+      width: 9px; height: 9px; background: #00cc66; border-radius: 50%;
+      box-shadow: 0 0 8px #00cc66; display: inline-block; margin-right: 8px;
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    @keyframes pulseDot { 0%,100% { box-shadow: 0 0 8px #00cc66; } 50% { box-shadow: 0 0 20px #00cc66; } }
+    .available-title { font-family: var(--font-m); font-size: 11px; letter-spacing: .18em; color: #00cc66; margin-bottom: .8rem; display: flex; align-items: center; }
+    .available-text {
+      font-family: var(--font-d); font-size: clamp(1rem, 1.6vw, 1.5rem); color: var(--wht);
+      line-height: 1.2; margin-bottom: clamp(.7rem, 2vh, 1.5rem); transform: skewX(-7deg);
     }
 
     /* ================================================================
-       P5 MAIN MENU — the centrepiece
+       PROMPT BAR — console button hints, and the touch controls
+       ================================================================ */
+    #promptbar {
+      position: relative; z-index: 40; flex: 0 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: clamp(.4rem, 1.1vh, .8rem) clamp(.8rem, 3vw, 2.4rem);
+      padding-bottom: max(clamp(.4rem, 1.1vh, .8rem), env(safe-area-inset-bottom));
+      background: rgba(11,11,11,.94); border-top: 3px solid var(--red);
+    }
+    .pager { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+    .pager-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 46px; min-height: 40px; background: var(--ink); color: var(--wht);
+      font-size: 15px; transform: skewX(-11deg); box-shadow: 3px 3px 0 var(--red);
+      transition: background .16s, color .16s, transform .16s var(--snap);
+    }
+    .pager-btn > * { transform: skewX(11deg); }
+    .pager-btn:hover { background: var(--wht); color: var(--blk); transform: skewX(-11deg) translateY(-2px); }
+    .pager-dots { display: flex; gap: 6px; align-items: center; margin: 0 6px; }
+    .pager-dots i {
+      display: block; width: 16px; height: 5px; background: var(--faint);
+      transform: skewX(-20deg); transition: background .2s, width .2s var(--snap);
+    }
+    .pager-dots i.on { background: var(--red); width: 26px; }
+    .prompts { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; justify-content: flex-end; }
+    .prompt {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: var(--font-m); font-size: 10px; letter-spacing: .16em; color: var(--wht);
+      background: rgba(0,0,0,.5); padding: 6px 11px; transform: skewX(-11deg);
+    }
+    .prompt > * { transform: skewX(11deg); }
+    .prompt b { display: inline-block; background: var(--wht); color: var(--blk); padding: 2px 7px; font-weight: 400; }
+    .prompt.btn { cursor: pointer; min-height: 36px; transition: background .16s; }
+    .prompt.btn:hover { background: var(--blk); }
+
+    /* ================================================================
+       P5 MAIN MENU — the hub, reachable from every screen
        ================================================================ */
     .p5menu {
       position: fixed; inset: 0; z-index: 900;
-      height: 100vh; height: 100dvh;   /* dvh keeps it exact under mobile browser chrome */
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      overflow: hidden;
-      opacity: 0; visibility: hidden;
-      transition: opacity .28s var(--out), visibility .28s;
+      height: 100vh; height: 100dvh;
+      display: grid; grid-template-rows: auto 1fr auto; overflow: hidden;
+      opacity: 0; visibility: hidden; transition: opacity .28s var(--out), visibility .28s;
     }
     .p5menu.open { opacity: 1; visibility: visible; }
-
-    /* --- layered background: red base + moving black bands + halftone --- */
-    .menu-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 70% 70% at 30% 40%, var(--red-lt) 0%, var(--red) 45%, var(--red-dk) 100%);
-    }
+    .menu-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 70% 70% at 30% 40%, var(--red-lt) 0%, var(--red) 45%, var(--red-dk) 100%); }
     .menu-stripes {
       position: absolute; top: -25%; left: -60%; width: 220%; height: 150%; z-index: 1;
-      background: repeating-linear-gradient(
-        115deg,
-        rgba(0,0,0,.88) 0 44px,
-        rgba(0,0,0,0)   44px 116px);
+      background: repeating-linear-gradient(115deg, rgba(0,0,0,.88) 0 44px, rgba(0,0,0,0) 44px 116px);
       animation: bgDrift 9s linear infinite;
     }
     .menu-halftone {
@@ -195,178 +491,93 @@
       -webkit-mask-image: radial-gradient(ellipse 65% 75% at 88% 85%, #000 0%, transparent 70%);
       mask-image: radial-gradient(ellipse 65% 75% at 88% 85%, #000 0%, transparent 70%);
     }
-    /* jagged black collage shards */
     .menu-shards { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
     .menu-shards svg { width: 100%; height: 100%; }
 
-    /* --- top bar --- */
     .menu-top {
-      position: relative; z-index: 10;
-      display: flex; align-items: flex-start; justify-content: space-between;
-      padding: clamp(1.2rem, 3vw, 2.4rem) clamp(1rem, 4vw, 3.4rem) 0;
-      gap: 1rem;
+      position: relative; z-index: 10; display: flex; align-items: flex-start; justify-content: space-between;
+      padding: clamp(1.2rem, 3vw, 2.4rem) clamp(1rem, 4vw, 3.4rem) 0; gap: 1rem;
     }
     .menu-title {
       font-family: var(--font-d); font-size: clamp(2rem, 5.5vw, 4.4rem);
-      /* Anton's caps are tall: any tighter and the two lines' hard shadows collide */
       line-height: 1.02; color: var(--wht); letter-spacing: .02em;
-      transform: skewX(-11deg) rotate(-2deg);
-      text-shadow: 6px 6px 0 var(--blk);
+      transform: skewX(-11deg) rotate(-2deg); text-shadow: 6px 6px 0 var(--blk);
       animation: dropIn .5s var(--snap) both;
     }
     .menu-title span { display: block; color: var(--blk); text-shadow: 5px 5px 0 var(--wht); padding-left: .5em; }
     @keyframes dropIn { from { opacity: 0; transform: skewX(-11deg) rotate(-2deg) translateY(-50px); } }
-
     .menu-date {
-      display: flex; align-items: center; gap: 12px;
-      background: var(--blk); color: var(--wht);
-      padding: 10px 22px; transform: skewX(-11deg) rotate(1.5deg);
-      clip-path: var(--jag-b);
-      font-family: var(--font-m); letter-spacing: .18em;
-      animation: dropIn .5s .08s var(--snap) both;
+      display: flex; align-items: center; gap: 12px; background: var(--blk); color: var(--wht);
+      padding: 10px 22px; transform: skewX(-11deg) rotate(1.5deg); clip-path: var(--jag-b);
+      font-family: var(--font-m); letter-spacing: .18em; animation: dropIn .5s .08s var(--snap) both;
     }
     .menu-date > * { transform: skewX(11deg); }
     .menu-date .md-day { color: var(--red-lt); font-size: 15px; }
     .menu-date .md-date { font-size: 15px; }
     .menu-date .md-wx { font-size: 16px; color: var(--yellow); }
 
-    /* --- body: list + figure --- */
     .menu-body {
-      position: relative; z-index: 10;
-      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
-      align-items: center; gap: 2rem;
-      padding: 0 clamp(1rem, 4vw, 3.4rem);
-      min-height: 0;
+      position: relative; z-index: 10; display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, .95fr);
+      align-items: center; gap: 2rem; padding: 0 clamp(1rem, 4vw, 3.4rem); min-height: 0;
     }
-
     .menu-list { display: flex; flex-direction: column; gap: clamp(6px, 1.1vh, 14px); padding-left: clamp(0px, 2vw, 34px); }
-
-    .menu-item {
-      position: relative; list-style: none; cursor: pointer;
-      animation: itemIn .46s var(--snap) both;
-      animation-delay: calc(var(--i) * 52ms + 60ms);
-    }
+    .menu-item { animation: itemIn .46s var(--snap) both; animation-delay: calc(var(--i) * 52ms + 60ms); }
     @keyframes itemIn {
       from { opacity: 0; transform: translateX(-170px) rotate(-9deg); }
       to   { opacity: 1; transform: translateX(0) rotate(-1.4deg); }
     }
-    .mi-shadow {
-      position: absolute; inset: 0;
-      background: var(--blk);
-      clip-path: var(--jag-b);
-      transform: skewX(-15deg) translate(10px, 9px);
-      opacity: 0; transition: opacity .18s, transform .22s var(--snap);
-    }
-    .mi-plate {
-      position: relative; display: block;
-      background: var(--ink);
-      border-left: 5px solid var(--red);
-      padding: clamp(9px, 1.5vh, 15px) clamp(28px, 4vw, 56px) clamp(9px, 1.5vh, 15px) clamp(16px, 2vw, 24px);
-      clip-path: var(--jag-b);
-      transform: skewX(-15deg);
-      transition: transform .24s var(--snap), background .16s, border-color .16s, color .16s;
-    }
-    .mi-in {
-      display: flex; align-items: baseline; gap: clamp(10px, 1.6vw, 20px);
-      transform: skewX(15deg);
-    }
-    .mi-num {
-      font-family: var(--font-m); font-size: 12px; letter-spacing: .12em;
-      color: var(--red-lt); transition: color .16s;
-    }
-    .mi-label {
-      font-family: var(--font-d); font-size: clamp(1.4rem, 3.4vw, 2.7rem); line-height: 1;
-      letter-spacing: .04em; color: var(--dim); transition: color .16s;
-    }
-    .mi-sub {
-      font-family: var(--font-m); font-size: 10px; letter-spacing: .28em;
-      color: var(--faint); margin-left: auto; transition: color .16s;
-      white-space: nowrap;
-    }
+    /* the main menu's plates are the same component, one size up */
+    .menu-item .p-plate { padding: clamp(9px, 1.5vh, 15px) clamp(28px, 4vw, 56px) clamp(9px, 1.5vh, 15px) clamp(16px, 2vw, 24px); }
+    .menu-item .p-label { font-size: clamp(1.4rem, 3.4vw, 2.7rem); }
+    .menu-item.sel .p-plate { transform: skewX(-15deg) translateX(clamp(18px, 3.5vw, 52px)) scale(1.06); }
+    .menu-item.sel .p-shadow { transform: skewX(-15deg) translate(clamp(30px,4.6vw,64px), 13px); }
 
-    /* selected — the item leaps out, inverts, and drops a hard black shadow */
-    .menu-item.sel .mi-plate {
-      background: var(--wht);
-      border-left-color: var(--blk);
-      transform: skewX(-15deg) translateX(clamp(18px, 3.5vw, 52px)) scale(1.06);
-    }
-    .menu-item.sel .mi-shadow { opacity: 1; transform: skewX(-15deg) translate(clamp(30px,4.6vw,64px), 13px); }
-    .menu-item.sel .mi-label { color: var(--blk); }
-    .menu-item.sel .mi-num   { color: var(--red); }
-    .menu-item.sel .mi-sub   { color: var(--red); }
-
-    /* --- right-hand figure: the mask --- */
     .menu-figure {
-      position: relative; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 1.2rem;
-      animation: figIn .6s .18s var(--snap) both;
+      position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.2rem; animation: figIn .6s .18s var(--snap) both;
     }
     @keyframes figIn { from { opacity: 0; transform: translateX(90px) rotate(6deg) scale(.9); } }
-    .menu-mask { width: min(78%, 420px); filter: drop-shadow(10px 12px 0 rgba(0,0,0,.65)); }
+    .menu-mask { width: min(78%, 400px); filter: drop-shadow(10px 12px 0 rgba(0,0,0,.65)); }
     .menu-mask .mask-body { animation: maskBob 5s ease-in-out infinite; transform-origin: 50% 50%; }
-    @keyframes maskBob {
-      0%,100% { transform: translateY(0) rotate(-3deg); }
-      50%     { transform: translateY(-14px) rotate(3deg); }
-    }
+    @keyframes maskBob { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(3deg); } }
     .figure-word {
       font-family: var(--font-d); font-size: clamp(1.1rem, 2.6vw, 2.2rem); line-height: 1.04;
       color: var(--wht); text-align: center; letter-spacing: .06em;
-      transform: skewX(-11deg) rotate(-3deg);
-      text-shadow: 4px 4px 0 var(--blk);
+      transform: skewX(-11deg) rotate(-3deg); text-shadow: 4px 4px 0 var(--blk);
     }
     .figure-word em { display: block; font-style: normal; color: var(--blk); text-shadow: 4px 4px 0 var(--wht); }
 
-    /* --- footer: description + button prompts --- */
     .menu-foot {
-      position: relative; z-index: 10;
-      display: flex; align-items: flex-end; justify-content: space-between;
-      gap: 1.5rem; flex-wrap: wrap;
-      padding: 0 clamp(1rem, 4vw, 3.4rem) clamp(1.2rem, 3vw, 2.4rem);
+      position: relative; z-index: 10; display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 1.5rem; flex-wrap: wrap; padding: 0 clamp(1rem, 4vw, 3.4rem) clamp(1.2rem, 3vw, 2.4rem);
       animation: dropIn .5s .22s var(--snap) both;
     }
     .menu-desc {
-      background: var(--blk); color: var(--cream);
-      padding: 14px 30px; max-width: 60ch;
+      background: var(--blk); color: var(--cream); padding: 14px 30px; max-width: 60ch;
       clip-path: var(--jag-b); transform: skewX(-11deg);
-      font-size: clamp(14px, 1.6vw, 17px); letter-spacing: .04em; line-height: 1.45;
+      font-size: clamp(13px, 1.5vw, 17px); letter-spacing: .04em; line-height: 1.45;
     }
     .menu-desc span { display: block; transform: skewX(11deg); }
     .menu-desc.flip { animation: descFlip .28s var(--out); }
     @keyframes descFlip { from { opacity: 0; transform: skewX(-11deg) translateX(-18px); } }
-
-    .menu-prompts { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-    .prompt {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--font-m); font-size: 11px; letter-spacing: .18em; color: var(--wht);
-      background: rgba(0,0,0,.62); padding: 8px 14px; transform: skewX(-11deg);
-    }
-    .prompt > * { transform: skewX(11deg); }
-    .prompt b {
-      display: inline-block; background: var(--wht); color: var(--blk);
-      padding: 2px 8px; font-weight: 400;
-    }
-    .prompt.btn { cursor: pointer; transition: background .16s; }
-    .prompt.btn:hover { background: var(--blk); }
+    .menu-prompts { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .menu-prompts .prompt { font-size: 11px; padding: 8px 14px; background: rgba(0,0,0,.62); }
 
     .menu-close {
       position: absolute; top: clamp(1rem, 3vw, 2.2rem); right: clamp(1rem, 4vw, 3.4rem);
-      z-index: 12; width: 46px; height: 46px;
-      background: var(--blk); color: var(--wht);
-      font-size: 20px; line-height: 1;
+      z-index: 12; width: 46px; height: 46px; background: var(--blk); color: var(--wht);
+      font-size: 20px; line-height: 1; display: none;
       clip-path: polygon(0 0, 100% 0, 100% 78%, 78% 100%, 0 100%);
       transition: background .16s, transform .16s var(--snap);
-      display: none;
     }
     .menu-close:hover { background: var(--wht); color: var(--blk); transform: scale(1.08) rotate(-4deg); }
 
     /* ================================================================
-       CUT-IN TRANSITION (the "all-out attack" wipe)
+       CUT-IN
        ================================================================ */
     .cutin { position: fixed; inset: 0; z-index: 950; pointer-events: none; overflow: hidden; }
-    .cutin-bar {
-      position: absolute; left: -30%; width: 160%; height: 22%;
-      background: var(--red); transform: translateX(-130%) skewY(-4deg);
-    }
+    .cutin-bar { position: absolute; left: -30%; width: 160%; height: 22%; background: var(--red); transform: translateX(-130%) skewY(-4deg); }
     .cutin-bar:nth-child(1) { top: 0%;  background: var(--blk); }
     .cutin-bar:nth-child(2) { top: 20%; }
     .cutin-bar:nth-child(3) { top: 40%; background: var(--blk); }
@@ -385,490 +596,124 @@
     }
 
     /* ================================================================
-       NAV — slanted P5 tabs
-       ================================================================ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      height: 76px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 clamp(1rem, 4vw, 3rem);
-      background: rgba(11,11,11,.93);
-      backdrop-filter: blur(12px);
-      border-bottom: 3px solid var(--red);
-    }
-    nav::after {
-      content: ''; position: absolute; left: 0; right: 0; bottom: -9px; height: 6px;
-      background: repeating-linear-gradient(115deg, var(--red) 0 14px, transparent 14px 30px);
-      opacity: .45;
-    }
-    .nav-logo {
-      font-family: var(--font-d); font-size: 1.8rem; color: var(--wht);
-      letter-spacing: .04em; transform: skewX(-11deg);
-      text-shadow: 3px 3px 0 var(--red);
-    }
-    .nav-links { display: flex; gap: 6px; align-items: center; }
-    .nav-links a {
-      display: block; position: relative;
-      font-family: var(--font-m); font-size: 12px; letter-spacing: .2em;
-      color: var(--dim); padding: 9px 16px;
-      transform: skewX(-11deg);
-      transition: color .18s, background .18s, transform .18s var(--snap);
-    }
-    .nav-links a span { display: block; transform: skewX(11deg); }
-    .nav-links a::before {
-      content: attr(data-num); position: absolute; top: 0px; left: 6px;
-      font-size: 8px; color: var(--red); opacity: 0; transition: opacity .18s;
-    }
-    .nav-links a:hover { color: var(--wht); background: var(--red); transform: skewX(-11deg) translateY(-2px); }
-    .nav-links a:hover::before { opacity: 1; }
-    .nav-links a.active { color: var(--blk); background: var(--wht); }
-    .nav-links a.active::before { opacity: 1; color: var(--red); }
-
-    .nav-right { display: flex; align-items: center; gap: 10px; }
-    /* the button that summons the real menu */
-    .menu-trigger {
-      position: relative;
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--red); color: var(--wht);
-      font-family: var(--font-m); font-size: 12px; letter-spacing: .22em;
-      padding: 11px 20px; transform: skewX(-11deg);
-      transition: background .18s, transform .18s var(--snap), box-shadow .18s;
-      box-shadow: 4px 4px 0 var(--blk);
-    }
-    .menu-trigger > * { transform: skewX(11deg); }
-    .menu-trigger:hover { background: var(--wht); color: var(--blk); transform: skewX(-11deg) translateY(-3px); box-shadow: 6px 7px 0 var(--red); }
-    .menu-trigger .mt-bars { display: flex; flex-direction: column; gap: 3px; }
-    .menu-trigger .mt-bars i { display: block; width: 18px; height: 2px; background: currentColor; }
-    .menu-trigger .mt-bars i:nth-child(2) { width: 12px; }
-    /* attention pulse until first use */
-    .menu-trigger.hint::after {
-      content: ''; position: absolute; inset: -4px; border: 2px solid var(--wht);
-      animation: hintPulse 1.8s ease-out infinite; pointer-events: none;
-    }
-    @keyframes hintPulse { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.18); } }
-
-    /* ================================================================
-       HERO
-       ================================================================ */
-    #hero {
-      min-height: 100vh; min-height: 100svh;  /* svh avoids the mobile URL-bar jump */
-      position: relative; overflow: hidden;
-      display: grid; grid-template-columns: 1fr .85fr;
-      align-items: center; gap: 2rem;
-      padding: 110px clamp(1rem, 6vw, 6rem) 60px;
-    }
-    .hero-bg-text {
-      position: absolute; right: -3%; top: 50%; transform: translateY(-50%) skewX(-9deg);
-      font-family: var(--font-d); font-size: clamp(6rem, 16vw, 17rem);
-      color: transparent; -webkit-text-stroke: 1px rgba(230,0,18,.10);
-      letter-spacing: .04em; pointer-events: none; user-select: none; white-space: nowrap;
-    }
-    .hero-slash {
-      position: absolute; top: -10%; bottom: -10%; right: 40%; width: 10px;
-      background: var(--red); transform: skewX(-11deg);
-      box-shadow: 0 0 40px rgba(230,0,18,.55);
-    }
-    .hero-content { position: relative; z-index: 2; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 12px;
-      font-family: var(--font-m); font-size: 12px; letter-spacing: .28em;
-      color: var(--wht); background: var(--red);
-      padding: 8px 18px; margin-bottom: 1.6rem;
-      transform: skewX(-11deg); box-shadow: 4px 4px 0 var(--blk);
-    }
-    .hero-eyebrow span { transform: skewX(11deg); }
-    .hero-name {
-      font-family: var(--font-d);
-      font-size: clamp(2.6rem, 7vw, 6rem);
-      line-height: .92; letter-spacing: .02em; margin-bottom: 1.4rem;
-    }
-    .name-line {
-      display: block; opacity: 0;
-      transform: translateY(60px) skewX(-9deg);
-      animation: revealUp .65s var(--snap) forwards;
-      text-shadow: 5px 5px 0 var(--blk);
-    }
-    .name-line:nth-child(2) { animation-delay: .10s; }
-    .name-line:nth-child(3) { animation-delay: .20s; }
-    .name-line.red { color: var(--red); text-shadow: 5px 5px 0 var(--blk); }
-    @keyframes revealUp { to { opacity: 1; transform: translateY(0) skewX(-9deg); } }
-    .hero-sub {
-      font-size: 19px; color: var(--dim); margin-bottom: 2.4rem;
-      letter-spacing: .06em; max-width: 42ch;
-    }
-    .hero-btns { display: flex; gap: 1.4rem; flex-wrap: wrap; }
-
-    /* ================================================================
-       P5 BUTTONS — skewed slab with hard offset shadow
-       ================================================================ */
-    .p5-btn {
-      position: relative; display: inline-flex; align-items: center; justify-content: center;
-      font-family: var(--font-m); font-size: 13px; letter-spacing: .2em;
-      padding: 15px 30px; cursor: pointer;
-      transform: skewX(-11deg);
-      transition: transform .2s var(--snap), background .2s, color .2s, box-shadow .2s;
-    }
-    .p5-btn > * { display: block; transform: skewX(11deg); }
-    .p5-btn.primary { background: var(--red); color: var(--wht); box-shadow: 6px 6px 0 var(--blk); }
-    .p5-btn.primary:hover { background: var(--wht); color: var(--blk); transform: skewX(-11deg) translate(-3px,-3px); box-shadow: 10px 10px 0 var(--red); }
-    .p5-btn.secondary { background: var(--ink); color: var(--wht); box-shadow: 6px 6px 0 var(--red); }
-    .p5-btn.secondary:hover { background: var(--wht); color: var(--blk); transform: skewX(-11deg) translate(-3px,-3px); box-shadow: 10px 10px 0 var(--blk); }
-
-    /* ================================================================
-       PHANTOM THIEF CARD
-       ================================================================ */
-    .hero-card-wrap { display: flex; justify-content: center; align-items: center; position: relative; z-index: 2; }
-    .pt-card {
-      width: 270px; height: 410px; position: relative;
-      transform-style: preserve-3d; cursor: pointer;
-      transition: transform .8s var(--out);
-      animation: cardFloat 6s ease-in-out infinite;
-    }
-    .pt-card:hover { transform: rotateY(180deg); animation: none; }
-    .pt-card-front, .pt-card-back {
-      position: absolute; inset: 0;
-      backface-visibility: hidden; -webkit-backface-visibility: hidden;
-      clip-path: var(--jag-a);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 16px; padding: 26px;
-    }
-    .pt-card-front { background: var(--ink); border: 2px solid var(--red); box-shadow: 0 0 50px rgba(230,0,18,.25); }
-    .pt-card-eye { width: 96px; }
-    .pt-card-name { font-family: var(--font-d); font-size: 2.1rem; color: var(--wht); letter-spacing: .12em; transform: skewX(-9deg); }
-    .pt-card-role { font-family: var(--font-m); font-size: 11px; color: var(--red); letter-spacing: .3em; text-align: center; }
-    .pt-card-stars { color: var(--yellow); font-size: 18px; letter-spacing: 4px; }
-    .pt-card-back { background: var(--red); transform: rotateY(180deg); }
-    .card-back-symbol { font-size: 3.6rem; }
-    .card-back-title { font-family: var(--font-d); font-size: 1.9rem; color: var(--blk); letter-spacing: .12em; transform: skewX(-9deg); }
-    .card-back-sub { font-family: var(--font-m); font-size: 11px; color: rgba(0,0,0,.65); letter-spacing: .4em; }
-    @keyframes cardFloat {
-      0%,100% { transform: translateY(0) rotate(-2.5deg); }
-      50%     { transform: translateY(-18px) rotate(2.5deg); }
-    }
-
-    /* ================================================================
-       SECTIONS — shared chrome
-       ================================================================ */
-    section { padding: clamp(4rem, 8vw, 8rem) clamp(1rem, 6vw, 6rem); position: relative; overflow: hidden; }
-    /* both are shrink-wrapped block boxes so the chip always sits above the title */
-    .section-eyebrow {
-      display: flex; width: -webkit-fit-content; width: fit-content; align-items: center;
-      font-family: var(--font-m); font-size: 11px; letter-spacing: .3em;
-      color: var(--wht); background: var(--blk);
-      padding: 7px 16px; margin-bottom: 1rem;
-      transform: skewX(-11deg); border-left: 4px solid var(--red);
-    }
-    .section-eyebrow span { transform: skewX(11deg); }
-    .section-title {
-      display: block; width: -webkit-fit-content; width: fit-content;
-      font-family: var(--font-d); font-size: clamp(2.2rem, 6.5vw, 5rem);
-      line-height: 1; letter-spacing: .03em; color: var(--wht);
-      transform: skewX(-9deg) rotate(-1.6deg);
-      text-shadow: 6px 6px 0 var(--red), 12px 12px 0 rgba(0,0,0,.55);
-      margin-bottom: 1.4rem;
-    }
-    .section-title .red { color: var(--red); text-shadow: 6px 6px 0 var(--blk); }
-    .title-rule {
-      position: relative; height: 8px; margin-bottom: clamp(2.2rem, 4vw, 4rem);
-      background: repeating-linear-gradient(115deg, var(--red) 0 22px, transparent 22px 44px);
-      max-width: 340px;
-    }
-
-    /* ================================================================
-       ABOUT
-       ================================================================ */
-    #about { background: linear-gradient(180deg, var(--blk), var(--ink)); }
-    #about::before {
-      content: 'STATUS'; position: absolute; right: -4%; top: 46%; transform: translateY(-50%) skewX(-9deg);
-      font-family: var(--font-d); font-size: clamp(5rem, 13vw, 13rem);
-      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.035);
-      pointer-events: none; user-select: none;
-    }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 5rem); align-items: start; position: relative; z-index: 1; }
-    .about-text p { font-size: 17px; line-height: 1.8; color: var(--dim); margin-bottom: 1.3rem; max-width: 56ch; }
-    .about-text .hl { color: var(--wht); font-weight: 600; background: linear-gradient(transparent 62%, rgba(230,0,18,.55) 62%); }
-    .about-stats { display: flex; gap: 1.4rem; margin-top: 2.6rem; flex-wrap: wrap; }
-    .stat-box {
-      position: relative; padding: 20px 26px; min-width: 116px;
-      background: var(--ink2); border-left: 5px solid var(--red);
-      clip-path: var(--jag-b); transform: skewX(-9deg);
-      box-shadow: 6px 6px 0 rgba(230,0,18,.28);
-    }
-    .stat-box > * { transform: skewX(9deg); }
-    .stat-num { font-family: var(--font-d); font-size: 2.6rem; color: var(--red); line-height: 1; }
-    .stat-label { font-family: var(--font-m); font-size: 10px; letter-spacing: .2em; color: var(--faint); margin-top: 5px; text-transform: uppercase; }
-
-    .profile-card {
-      background: var(--ink2); clip-path: var(--jag-a);
-      border: 1px solid rgba(230,0,18,.25); overflow: hidden;
-      transform: rotate(-.7deg);
-    }
-    .profile-card-header {
-      background: var(--red); padding: 15px 22px; color: var(--blk);
-      font-family: var(--font-d); font-size: 1.15rem; letter-spacing: .22em;
-    }
-    .profile-row {
-      display: flex; align-items: center; gap: 16px; padding: 15px 22px;
-      border-bottom: 1px solid rgba(255,255,255,.05); transition: background .2s, padding-left .2s;
-    }
-    .profile-row:hover { background: rgba(230,0,18,.08); padding-left: 30px; }
-    .profile-row:last-child { border-bottom: none; }
-    .profile-key { font-family: var(--font-m); font-size: 10px; letter-spacing: .2em; color: var(--red); min-width: 104px; }
-    .profile-val { font-size: 14px; color: var(--dim); letter-spacing: .04em; }
-
-    /* ================================================================
-       SKILLS
-       ================================================================ */
-    #skills { background: var(--blk); }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(290px,100%), 1fr)); gap: 1.6rem; position: relative; z-index: 1; }
-    .skill-cat {
-      background: var(--ink2); position: relative; overflow: hidden;
-      clip-path: var(--jag-a);
-      transition: transform .3s var(--snap), box-shadow .3s;
-      transform: rotate(-.5deg);
-    }
-    .skill-cat:nth-child(even) { transform: rotate(.5deg); }
-    .skill-cat::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
-      background: var(--red); transform: scaleX(0); transform-origin: left;
-      transition: transform .4s var(--out);
-    }
-    .skill-cat:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 18px 36px rgba(0,0,0,.5); }
-    .skill-cat:hover::before { transform: scaleX(1); }
-    .skill-cat-header { padding: 20px 22px 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,.06); }
-    .skill-cat-num { font-family: var(--font-m); font-size: 11px; color: var(--red); }
-    .skill-cat-title { font-family: var(--font-d); font-size: 1rem; letter-spacing: .14em; color: var(--wht); transform: skewX(-9deg); }
-    .skill-tags { padding: 18px 22px; display: flex; flex-wrap: wrap; gap: 9px; }
-    .skill-tag {
-      padding: 7px 14px; font-family: var(--font-m); font-size: 12px; letter-spacing: .1em;
-      color: var(--dim); background: rgba(255,255,255,.05);
-      transform: skewX(-11deg); transition: all .18s var(--snap);
-    }
-    .skill-tag span { display: block; transform: skewX(11deg); }
-    .skill-tag:hover { background: var(--red); color: var(--wht); transform: skewX(-11deg) translateY(-3px); box-shadow: 4px 4px 0 var(--blk); }
-    .skill-tag.hot { background: rgba(230,0,18,.2); color: var(--red-lt); }
-
-    /* ================================================================
-       EXPERIENCE
-       ================================================================ */
-    #experience { background: linear-gradient(180deg, var(--ink), var(--blk)); }
-    .exp-timeline { position: relative; padding-left: 48px; z-index: 1; }
-    .exp-timeline::before {
-      content: ''; position: absolute; left: 14px; top: 0; bottom: 0; width: 3px;
-      background: linear-gradient(to bottom, var(--red), transparent);
-    }
-    .exp-item {
-      position: relative; margin-bottom: 2.6rem;
-      opacity: 0; transform: translateX(-34px);
-      transition: opacity .6s var(--out), transform .6s var(--snap);
-    }
-    .exp-item.revealed { opacity: 1; transform: translateX(0); }
-    .exp-item::before {
-      content: attr(data-idx); position: absolute; left: -48px; top: 8px;
-      width: 30px; height: 30px; background: var(--red); color: var(--blk);
-      font-family: var(--font-m); font-size: 11px;
-      display: flex; align-items: center; justify-content: center;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    }
-    .exp-card {
-      background: var(--ink2); padding: 26px 30px; position: relative;
-      border-left: 5px solid var(--red); clip-path: var(--jag-b);
-      transform: rotate(-.4deg); transition: transform .3s var(--snap);
-    }
-    .exp-card:hover { transform: rotate(0) translateX(8px); }
-    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
-    .exp-title { font-family: var(--font-d); font-size: 1.35rem; letter-spacing: .04em; color: var(--wht); transform: skewX(-8deg); }
-    .exp-date {
-      font-family: var(--font-m); font-size: 11px; letter-spacing: .14em;
-      color: var(--wht); background: var(--red); padding: 5px 12px;
-      white-space: nowrap; transform: skewX(-11deg);
-    }
-    .exp-date span { display: block; transform: skewX(11deg); }
-    .exp-company { font-size: 14px; color: var(--faint); letter-spacing: .1em; margin-bottom: 15px; }
-    .exp-list { display: flex; flex-direction: column; gap: 7px; }
-    .exp-list li { font-size: 15px; color: var(--dim); padding-left: 18px; position: relative; line-height: 1.6; }
-    .exp-list li::before { content: '\25B8'; position: absolute; left: 0; color: var(--red); font-size: 12px; }
-
-    /* ================================================================
-       PROJECTS
-       ================================================================ */
-    #projects { background: var(--blk); }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px,100%), 1fr)); gap: 1.6rem; margin-bottom: 3rem; position: relative; z-index: 1; }
-    .project-card {
-      display: block; position: relative; overflow: hidden;
-      background: var(--ink2); padding: 30px 26px;
-      clip-path: var(--jag-a); cursor: pointer;
-      transform: rotate(-.6deg);
-      transition: transform .3s var(--snap), background .3s, box-shadow .3s;
-    }
-    .project-card:nth-child(even) { transform: rotate(.6deg); }
-    .project-card::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(230,0,18,.14) 0%, transparent 60%);
-      opacity: 0; transition: opacity .3s;
-    }
-    .project-card:hover { transform: rotate(0) translateY(-8px); box-shadow: 0 22px 44px rgba(0,0,0,.55); }
-    .project-card:hover::before { opacity: 1; }
-    .proj-num { font-family: var(--font-m); font-size: 11px; color: var(--red); letter-spacing: .2em; margin-bottom: 12px; }
-    .proj-title {
-      font-family: var(--font-d); font-size: 1.4rem; letter-spacing: .04em;
-      color: var(--wht); margin-bottom: 9px; transform: skewX(-8deg);
-      transition: color .2s, text-shadow .2s;
-    }
-    .project-card:hover .proj-title { color: var(--red-lt); text-shadow: 3px 3px 0 var(--blk); }
-    .proj-tech { font-family: var(--font-m); font-size: 11px; letter-spacing: .14em; color: var(--faint); }
-    .proj-arrow {
-      position: absolute; bottom: 22px; right: 28px; font-size: 22px; color: var(--red);
-      opacity: 0; transform: translateX(-10px); transition: opacity .25s, transform .25s var(--snap);
-    }
-    .project-card:hover .proj-arrow { opacity: 1; transform: translateX(0); }
-    .proj-badge {
-      position: absolute; top: 18px; right: 18px;
-      background: var(--yellow); color: var(--blk);
-      font-family: var(--font-m); font-size: 10px; letter-spacing: .14em;
-      padding: 5px 11px; transform: skewX(-11deg) rotate(-3deg);
-    }
-    .proj-badge span { display: block; transform: skewX(11deg); }
-    .projects-cta { text-align: center; position: relative; z-index: 1; }
-
-    /* ================================================================
-       CONTACT
-       ================================================================ */
-    #contact { background: linear-gradient(180deg, var(--ink), var(--blk)); }
-    #contact::after {
-      content: 'CONNECT'; position: absolute; right: -5%; bottom: 2%; transform: skewX(-9deg);
-      font-family: var(--font-d); font-size: clamp(4rem, 11vw, 11rem);
-      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.03);
-      pointer-events: none; user-select: none;
-    }
-    .contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 4vw, 5rem); align-items: start; position: relative; z-index: 1; }
-    .contact-items { display: flex; flex-direction: column; gap: 1.1rem; }
-    .contact-item {
-      display: flex; align-items: center; gap: 20px; padding: 20px 26px;
-      background: var(--ink2); clip-path: var(--jag-b);
-      transform: skewX(-6deg);
-      transition: transform .28s var(--snap), background .28s, box-shadow .28s;
-    }
-    .contact-item > * { transform: skewX(6deg); }
-    .contact-item:hover { background: var(--red); transform: skewX(-6deg) translateX(14px); box-shadow: -8px 8px 0 var(--blk); }
-    .contact-item:hover .contact-label { color: var(--blk); }
-    .contact-item:hover .contact-val { color: var(--wht); }
-    .contact-icon-wrap {
-      width: 46px; height: 46px; flex-shrink: 0;
-      background: rgba(230,0,18,.14); border: 1px solid rgba(230,0,18,.4);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-m); font-size: 14px; color: var(--red-lt);
-    }
-    .contact-item:hover .contact-icon-wrap { background: var(--blk); color: var(--wht); border-color: var(--blk); }
-    .contact-label { font-family: var(--font-m); font-size: 10px; letter-spacing: .25em; color: var(--red); margin-bottom: 5px; transition: color .28s; }
-    .contact-val { font-size: 14px; color: var(--dim); letter-spacing: .04em; transition: color .28s; }
-    .contact-arrow-right { margin-left: auto; color: var(--wht); opacity: 0; transition: opacity .2s, transform .2s; }
-    .contact-item:hover .contact-arrow-right { opacity: 1; transform: skewX(6deg) translateX(5px); }
-
-    .available-card {
-      background: var(--ink2); padding: 34px; position: relative;
-      clip-path: var(--jag-a); border: 1px solid rgba(230,0,18,.25);
-      transform: rotate(.6deg);
-    }
-    .available-dot {
-      width: 10px; height: 10px; background: #00cc66; border-radius: 50%;
-      box-shadow: 0 0 8px #00cc66; display: inline-block; margin-right: 9px;
-      animation: pulseDot 2s ease-in-out infinite;
-    }
-    @keyframes pulseDot { 0%,100% { box-shadow: 0 0 8px #00cc66; } 50% { box-shadow: 0 0 22px #00cc66; } }
-    .available-title { font-family: var(--font-m); font-size: 12px; letter-spacing: .2em; color: #00cc66; margin-bottom: 1rem; display: flex; align-items: center; }
-    .available-text { font-family: var(--font-d); font-size: 1.5rem; color: var(--wht); line-height: 1.25; margin-bottom: 1.6rem; transform: skewX(-7deg); }
-
-    /* ================================================================
-       FOOTER
-       ================================================================ */
-    footer {
-      background: var(--blk); border-top: 4px solid var(--red);
-      padding: 26px clamp(1rem, 6vw, 6rem);
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-    }
-    .footer-left { font-family: var(--font-m); font-size: 12px; color: var(--faint); letter-spacing: .14em; }
-    .footer-right { font-family: var(--font-m); font-size: 12px; color: var(--red); letter-spacing: .2em; }
-
-    /* ================================================================
-       SCROLL REVEAL
-       ================================================================ */
-    .reveal { opacity: 0; transform: translateY(34px); transition: opacity .7s var(--out), transform .7s var(--snap); }
-    .reveal.revealed { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: .09s; }
-    .reveal-delay-2 { transition-delay: .18s; }
-    .reveal-delay-3 { transition-delay: .27s; }
-    /* rotated cards keep their tilt after revealing */
-    .skill-cat.reveal.revealed             { transform: rotate(-.5deg); }
-    .skill-cat.reveal:nth-child(even).revealed { transform: rotate(.5deg); }
-    .project-card.reveal.revealed          { transform: rotate(-.6deg); }
-    .project-card.reveal:nth-child(even).revealed { transform: rotate(.6deg); }
-    .profile-card.reveal.revealed          { transform: rotate(-.7deg); }
-    .available-card.reveal.revealed        { transform: rotate(.6deg); }
-    .stat-box.reveal.revealed              { transform: skewX(-9deg); }
-    .contact-item.reveal.revealed          { transform: skewX(-6deg); }
-
-    /* ================================================================
        RESPONSIVE
        ================================================================ */
-    /* Below this the mask is gone and the list spans the full width, so the
-       selected plate has to shift less or it runs off the right edge. */
+    @media (hover: none), (pointer: coarse) {
+      .menu-close { display: block; }
+      .menu-top { padding-right: calc(clamp(1rem, 4vw, 3.4rem) + 62px); }
+      .desktop-only { display: none !important; }
+    }
+
     @media (max-width: 1000px) {
       .menu-body { grid-template-columns: 1fr; align-content: center; }
       .menu-figure { display: none; }
       .menu-list { padding-left: 0; padding-right: 34px; }
-      .menu-item.sel .mi-plate { transform: skewX(-15deg) translateX(10px) scale(1.03); }
-      .menu-item.sel .mi-shadow { transform: skewX(-15deg) translate(18px, 9px); }
+      .menu-item.sel .p-plate { transform: skewX(-15deg) translateX(10px) scale(1.03); }
+      .menu-item.sel .p-shadow { transform: skewX(-15deg) translate(18px, 9px); }
+    }
+
+    /* Stack list over detail only on a narrow PORTRAIT viewport. A landscape
+       phone is also under 900px wide but has height to spare and no width to
+       spare, so it keeps the two columns — orientation is the real distinction,
+       not raw height (a 320x568 phone is short *and* portrait). */
+    @media (max-width: 900px) and (orientation: portrait) {
+      .dual, #s-about .screen-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: clamp(.5rem, 1.6vh, 1rem);
+        align-items: stretch;   /* overrides the side-by-side centring */
+      }
+      /* let the detail panel take the leftover height instead of
+         leaving a dead gap under it */
+      .dual-detail { display: flex; flex-direction: column; min-height: 0; }
+      .dual-detail .detail.on { flex: 1 1 auto; }
+      .dual-list { padding-right: 26px; }
     }
     @media (max-width: 900px) {
-      #hero { grid-template-columns: 1fr; }
-      .hero-card-wrap, .hero-slash { display: none; }
-      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      #s-home .screen-body { grid-template-columns: 1fr; }
+      .pt-card { display: none; }
+      .detail, .profile-card, .available-card { transform: none; }
     }
-    /* Touch devices have no keyboard and no hover, so they need the close
-       button and room for it — at any width, landscape phones included. */
-    @media (hover: none), (pointer: coarse) {
-      .menu-close { display: block; }
-      /* reserve exactly the close button's own right offset + width + a gap */
-      .menu-top { padding-right: calc(clamp(1rem, 4vw, 3.4rem) + 62px); }
-      .menu-prompts .desktop-only { display: none; }
-      /* comfortable thumb targets */
-      .menu-trigger { min-height: 44px; padding: 13px 20px; }
-      .prompt { min-height: 40px; }
+
+    /* Compact the ABOUT screen so its prose, stats and profile card all fit */
+    @media (max-width: 640px), (max-height: 560px) {
+      .about-copy p { font-size: 12.5px; line-height: 1.5; margin-bottom: .45rem; }
+      .about-stats { gap: .5rem; margin-top: .6rem; }
+      .stat-box { padding: 7px 12px; }
+      .stat-num { font-size: 1.3rem; }
+      .stat-label { font-size: 8px; letter-spacing: .12em; }
+      .profile-card-header { padding: 7px 14px; font-size: .82rem; letter-spacing: .16em; }
+      .profile-row { padding: 6px 14px; gap: 10px; }
+      .profile-key { min-width: 76px; font-size: 8px; letter-spacing: .14em; }
+      .profile-val { font-size: 11.5px; }
+      .detail-list li { font-size: 12px; line-height: 1.45; }
+      .detail-title { font-size: 1rem; }
+      .detail-meta { font-size: 10px; margin-bottom: .6rem; }
+      .detail { padding: .8rem 1rem; }
     }
 
     @media (max-width: 820px) {
-      .nav-links { display: none; }
-      .menu-close { display: block; }
       .menu-prompts .desktop-only { display: none; }
-      .mi-sub { display: none; }
-      .menu-body { padding-top: .5rem; padding-bottom: .5rem; overflow-y: auto; }
-      /* keep the title, the date chip and the close button out of each other's way */
-      .menu-top {
-        align-items: center; padding-top: 1.5rem;
-        padding-right: calc(clamp(1rem, 4vw, 3.4rem) + 62px);
-      }
+      .menu-list { padding-right: 34px; }
+      .menu-top { align-items: center; padding-top: 1.5rem; }
       .menu-title { font-size: clamp(1.5rem, 7vw, 2.2rem); text-shadow: 4px 4px 0 var(--blk); }
       .menu-title span { text-shadow: 4px 4px 0 var(--wht); }
       .menu-date { padding: 7px 14px; }
       .menu-date .md-day, .menu-date .md-date { font-size: 12px; }
-    }
-    @media (max-width: 520px) {
-      .menu-desc { max-width: 100%; }
-      .section-title { text-shadow: 4px 4px 0 var(--red); }
+      .p-sub { display: none; }
+      .tb-logo { display: none; }
     }
 
-    /* On the narrowest phones the title and the date chip cannot both keep
-       their full size on one row — the chip gets pushed under the close
-       button. Shrink the chip rather than let them collide. */
+    @media (max-width: 520px) {
+      .menu-desc { max-width: 100%; }
+      .screen-title { text-shadow: 4px 4px 0 var(--red); }
+      .prompts .prompt { display: none; }
+      .prompts .prompt.btn { display: inline-flex; }
+    }
+
     @media (max-width: 420px) {
       .menu-date { gap: 6px; padding: 5px 9px; }
       .menu-date .md-day, .menu-date .md-date { font-size: 10px; letter-spacing: .1em; }
       .menu-date .md-wx { display: none; }
+
+      /* Smallest phones: the stage is ~450px tall, so every screen's parts get
+         trimmed until the whole screen fits with nothing cut off. */
+      .screen-head { margin-bottom: .35rem; }
+      /* Anton fills its em box, so the title needs real leading here or its
+         caps ride up into the eyebrow chip above it */
+      .screen-eyebrow { padding: 3px 10px; font-size: 8px; margin-bottom: .7rem; }
+      /* the -1.4deg tilt lifts a long title's left end; flatten it here so it
+         cannot ride up into the eyebrow chip */
+      .screen-title {
+        font-size: 1.35rem; line-height: 1.14;
+        transform: skewX(-9deg); text-shadow: 4px 4px 0 var(--red);
+      }
+
+      .plist { gap: 4px; }
+      .dual-list { padding-right: 22px; }
+      .dual-list .p-plate { padding: 5px 16px 5px 11px; }
+      .dual-list .p-label { font-size: .92rem; }
+      .detail { padding: .7rem .9rem; }
+
+      /* the prompt bar has to hold prev/next, the dots and SFX inside 320px */
+      .pager-btn { width: 38px; }
+      .pager-dots { gap: 4px; margin: 0 4px; }
+      .pager-dots i { width: 10px; }
+      .pager-dots i.on { width: 18px; }
+      #promptbar { padding-left: .6rem; padding-right: .6rem; }
+
+      .about-copy p { font-size: 11.5px; line-height: 1.45; margin-bottom: .4rem; }
+      .stat-box { padding: 5px 10px; }
+      .stat-num { font-size: 1.05rem; }
+      .stat-label { font-size: 7px; }
+      .about-stats { margin-top: .5rem; gap: .4rem; }
+      .profile-card-header { padding: 5px 12px; font-size: .72rem; }
+      .profile-row { padding: 4px 12px; gap: 8px; }
+      .profile-key { min-width: 66px; font-size: 7.5px; }
+      .profile-val { font-size: 10.5px; }
     }
 
-    /* Short viewports — landscape phones above all. A Persona 5 menu never
-       scrolls its main list, so compress the chrome until all six entries fit
-       between the header and the footer instead of hiding under it. */
+    /* Short viewports — landscape phones. Compress hard so every screen fits. */
     @media (max-height: 560px) {
       .menu-top { padding-top: .55rem; }
       .menu-title { font-size: clamp(1.05rem, 4.6vh, 1.75rem); text-shadow: 3px 3px 0 var(--blk); }
@@ -876,32 +721,36 @@
       .menu-date { padding: 5px 12px; }
       .menu-date .md-day, .menu-date .md-date { font-size: 11px; }
       .menu-list { gap: 5px; }
-      .mi-plate { padding: 7px clamp(24px, 4vw, 44px) 7px 16px; min-height: 34px; }
-      .mi-label { font-size: clamp(1rem, 4vh, 1.6rem); }
-      .mi-num { font-size: 10px; }
+      .menu-item .p-plate { padding: 7px clamp(24px, 4vw, 44px) 7px 16px; min-height: 34px; }
+      .menu-item .p-label { font-size: clamp(1rem, 4vh, 1.6rem); }
       .menu-foot { padding-bottom: .6rem; gap: .6rem; }
       .menu-desc { padding: 8px 22px; font-size: 12px; line-height: 1.35; }
-      /* two lines max, so the description can never grow into the list */
-      .menu-desc span {
-        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-      }
-      .prompt { padding: 5px 10px; font-size: 10px; }
+      .menu-desc span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .menu-prompts .prompt { padding: 5px 10px; font-size: 10px; }
       .menu-close { width: 38px; height: 38px; font-size: 16px; top: .5rem; }
+      .screen-head { margin-bottom: .4rem; }
+      .screen-title { font-size: clamp(1.1rem, 5.4vh, 1.7rem); text-shadow: 3px 3px 0 var(--red); }
+      .screen-eyebrow { margin-bottom: .3rem; padding: 4px 11px; font-size: 9px; }
+      .home-name { font-size: clamp(1.5rem, 9vh, 3rem); }
+      .about-copy p { font-size: 12px; line-height: 1.5; }
+      /* six rows have to fit in ~200px of stage here */
+      .plist { gap: 4px; }
+      .dual-list .p-plate { padding: 4px clamp(14px, 2vw, 26px) 4px 12px; }
+      .dual-list .p-label { font-size: clamp(.82rem, 3.4vh, 1.15rem); }
+      .dual-list .p-num { font-size: 9px; }
+      /* secondary flourish — the channel list and its detail come first */
+      .available-card { display: none; }
     }
 
     /* ================================================================
-       REDUCED MOTION — respect the user, keep the look
+       REDUCED MOTION
        ================================================================ */
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
       *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
+        animation-duration: .01ms !important; animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
       }
       .site-bg::before, .menu-stripes { animation: none !important; }
-      .reveal { opacity: 1; transform: none; }
-      .exp-item { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -924,8 +773,313 @@
   <div class="load-logo-text">TAKE YOUR TIME</div>
   <div class="load-bar-wrap"><div class="load-fill" id="loadFill"></div></div>
   <div class="load-percent" id="loadPct">0%</div>
-  <div class="load-tip">PRESS <b>M</b> ANYTIME TO OPEN THE MENU</div>
 </div>
+
+<!-- ============================== TOP BAR ============================== -->
+<header id="topbar">
+  <div class="tb-logo">BA.</div>
+  <div class="tb-where" aria-live="polite">
+    <span class="tb-num" id="tbNum">01</span>
+    <span class="tb-name" id="tbName">SAFEHOUSE</span>
+  </div>
+  <div class="tb-actions">
+    <button class="tb-btn primary hint" id="menuTrigger" aria-haspopup="dialog" aria-controls="p5menu">
+      <span class="mt-bars"><i></i><i></i><i></i></span>
+      <span>MENU</span>
+    </button>
+  </div>
+</header>
+
+<!-- ============================== STAGE ============================== -->
+<main id="stage">
+
+  <!-- ---------- HOME ---------- -->
+  <section class="screen" id="s-home" aria-label="Home">
+    <div class="home-bg-word">PHANTOM</div>
+    <div class="screen-body">
+      <div>
+        <div class="home-eyebrow"><span>SOFTWARE DEVELOPER &amp; iOS ENGINEER</span></div>
+        <h1 class="home-name">
+          <span class="name-line">ERC&#220;MENT</span>
+          <span class="name-line red">BERKE</span>
+          <span class="name-line">ARASTAMAN</span>
+        </h1>
+        <p class="home-sub">Crafting experiences. Building realities.</p>
+        <div class="home-btns">
+          <button class="p5-btn primary" id="homeMenuBtn"><span>OPEN THE MENU</span></button>
+          <button class="p5-btn secondary" data-goto="projects"><span>VIEW OPERATIONS</span></button>
+        </div>
+      </div>
+      <div class="pt-card" tabindex="0" title="Flip">
+        <div class="pt-card-front">
+          <div class="pt-card-eye">
+            <svg viewBox="0 0 400 190" aria-hidden="true">
+              <path fill="#e60012" fill-rule="evenodd" d="
+                M8,60 L96,20 L200,4 L304,20 L392,60 L348,122 L278,168 L200,180 L122,168 L52,122 Z
+                M66,74 L132,54 L186,82 L168,114 L102,118 L70,98 Z
+                M334,74 L268,54 L214,82 L232,114 L298,118 L330,98 Z"/>
+            </svg>
+          </div>
+          <div class="pt-card-name">BERKE</div>
+          <div class="pt-card-role">iOS &middot; WEB &middot; AI</div>
+          <div class="pt-card-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="pt-card-back">
+          <div class="card-back-symbol">&#9876;</div>
+          <div class="card-back-title">PHANTOM</div>
+          <div class="card-back-title">THIEF</div>
+          <div class="card-back-sub">CONFIDENTIAL</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- ABOUT ---------- -->
+  <section class="screen" id="s-about" aria-label="About">
+    <div class="screen-head">
+      <div class="screen-eyebrow"><span>/// 02 &mdash; STATUS</span></div>
+      <h2 class="screen-title">WHO AM I<span class="red">?</span></h2>
+    </div>
+    <div class="screen-body">
+      <div class="about-copy">
+        <p>A <span class="hl">motivated and versatile Software Developer</span> with a strong academic foundation in Computer Education and Instructional Technologies.</p>
+        <p>I apply my expertise in <span class="hl">web development</span> (HTML5, CSS, JavaScript, PHP), <span class="hl">iOS mobile development</span> (Swift), and <span class="hl">AI data preprocessing</span> to innovative projects that create real impact.</p>
+        <div class="about-stats">
+          <div class="stat-box"><div class="stat-num" data-count="3">0</div><div class="stat-label">Years Coding</div></div>
+          <div class="stat-box"><div class="stat-num" data-count="44">0</div><div class="stat-label">GitHub Repos</div></div>
+          <div class="stat-box"><div class="stat-num" data-count="432" data-suffix="h">0</div><div class="stat-label">Training Hrs</div></div>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-card-header">// PROFILE DATA</div>
+        <div class="profile-row"><span class="profile-key">NAME</span><span class="profile-val">Ercüment Berke Arastaman</span></div>
+        <div class="profile-row"><span class="profile-key">LOCATION</span><span class="profile-val">Ankara, Türkiye</span></div>
+        <div class="profile-row"><span class="profile-key">EDUCATION</span><span class="profile-val">CEIT — Hacettepe University</span></div>
+        <div class="profile-row"><span class="profile-key">GRADUATION</span><span class="profile-val">Expected 2026</span></div>
+        <div class="profile-row"><span class="profile-key">LANGUAGES</span><span class="profile-val">Turkish · English (Advanced)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- SKILLS ---------- -->
+  <section class="screen" id="s-skills" aria-label="Skills">
+    <div class="screen-head">
+      <div class="screen-eyebrow"><span>/// 03 &mdash; ARSENAL</span></div>
+      <h2 class="screen-title">ARSENAL<span class="red">.</span></h2>
+    </div>
+    <div class="screen-body">
+      <div class="dual">
+        <ul class="plist dual-list" data-list="skills" role="listbox" aria-label="Skill categories">
+          <li><button class="pitem" role="option" aria-selected="true"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">01</span><span class="p-label">MOBILE &amp; FRONTEND</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">02</span><span class="p-label">BACKEND &amp; DATA</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">03</span><span class="p-label">DESIGN &amp; PROCESS</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">04</span><span class="p-label">SOFT SKILLS</span></span></span></button></li>
+        </ul>
+        <div class="dual-detail" data-detail="skills">
+          <div class="detail on">
+            <div class="detail-kicker">// EQUIPPED &mdash; 01</div>
+            <div class="detail-title">MOBILE &amp; FRONTEND</div>
+            <div class="tagrow">
+              <span class="tag hot"><span>Swift</span></span><span class="tag hot"><span>iOS Dev</span></span>
+              <span class="tag"><span>HTML5</span></span><span class="tag"><span>CSS</span></span>
+              <span class="tag"><span>JavaScript</span></span><span class="tag"><span>React.js</span></span>
+            </div>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// EQUIPPED &mdash; 02</div>
+            <div class="detail-title">BACKEND &amp; DATA</div>
+            <div class="tagrow">
+              <span class="tag"><span>PHP</span></span><span class="tag"><span>Node.js</span></span>
+              <span class="tag"><span>AJAX</span></span><span class="tag"><span>Data Preprocessing</span></span>
+            </div>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// EQUIPPED &mdash; 03</div>
+            <div class="detail-title">DESIGN &amp; PROCESS</div>
+            <div class="tagrow">
+              <span class="tag"><span>UI/UX Design</span></span><span class="tag"><span>Responsive Design</span></span>
+              <span class="tag"><span>SDLC</span></span>
+            </div>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// EQUIPPED &mdash; 04</div>
+            <div class="detail-title">SOFT SKILLS</div>
+            <div class="tagrow">
+              <span class="tag"><span>Team Collaboration</span></span><span class="tag"><span>Event Management</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- EXPERIENCE ---------- -->
+  <section class="screen" id="s-experience" aria-label="Experience">
+    <div class="screen-head">
+      <div class="screen-eyebrow"><span>/// 04 &mdash; CONFIDANTS</span></div>
+      <h2 class="screen-title">CONFIDENTIAL FILES<span class="red">.</span></h2>
+    </div>
+    <div class="screen-body">
+      <div class="dual">
+        <ul class="plist dual-list" data-list="exp" role="listbox" aria-label="Roles">
+          <li><button class="pitem" role="option" aria-selected="true"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">01</span><span class="p-label">iOS Developer</span><span class="p-sub">2025 —</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">02</span><span class="p-label">TEYE Web Platform</span><span class="p-sub">2025</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">03</span><span class="p-label">AI Data Preprocessing</span><span class="p-sub">2024</span></span></span></button></li>
+        </ul>
+        <div class="dual-detail" data-detail="exp">
+          <div class="detail on">
+            <div class="detail-kicker">// MISSION FILE &mdash; 01</div>
+            <div class="detail-title">iOS Developer</div>
+            <div class="detail-meta"><span class="date">Oct 2025 — Present</span><span>Self Employed · Remote</span></div>
+            <ul class="detail-list">
+              <li>Designing and implementing clean, maintainable code architectures for iOS.</li>
+              <li>Building interfaces prioritising exceptional user experience.</li>
+              <li>Post-release performance monitoring, debugging, and version updates.</li>
+            </ul>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// MISSION FILE &mdash; 02</div>
+            <div class="detail-title">TEYE Web Platform Developer</div>
+            <div class="detail-meta"><span class="date">Feb 2025 — Jul 2025</span><span>Hacettepe University · Ankara</span></div>
+            <ul class="detail-list">
+              <li>Developed user-friendly interfaces using HTML5, CSS, and JavaScript.</li>
+              <li>Architected dynamic data flows and server-side operations with PHP.</li>
+              <li>Implemented AJAX integration to minimise page reloads.</li>
+            </ul>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// MISSION FILE &mdash; 03</div>
+            <div class="detail-title">AI Data Preprocessing Intern</div>
+            <div class="detail-meta"><span class="date">Jul 2024 — Aug 2024</span><span>SA İNOVASYON · Ankara</span></div>
+            <ul class="detail-list">
+              <li>Performed audio segmentation and isolation for analysis.</li>
+              <li>Optimised AI model training datasets by improving audio quality.</li>
+              <li>Contributed to high-quality data architecture for AI model backbone.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- PROJECTS ---------- -->
+  <section class="screen" id="s-projects" aria-label="Projects">
+    <div class="screen-head">
+      <div class="screen-eyebrow"><span>/// 05 &mdash; OPERATIONS</span></div>
+      <h2 class="screen-title">OPERATIONS<span class="red">.</span></h2>
+    </div>
+    <div class="screen-body">
+      <div class="dual">
+        <ul class="plist dual-list" data-list="proj" role="listbox" aria-label="Projects">
+          <li><button class="pitem" role="option" aria-selected="true"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">01</span><span class="p-label">Anime Fansub Platform</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">02</span><span class="p-label">HepFit</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">03</span><span class="p-label">Hucon Anime Awards</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">04</span><span class="p-label">Market Analysis App</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">05</span><span class="p-label">Database Teaching Platform</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">06</span><span class="p-label">Berke ChatMate Pro</span><span class="p-sub">LATEST</span></span></span></button></li>
+        </ul>
+        <div class="dual-detail" data-detail="proj">
+          <div class="detail on">
+            <div class="detail-kicker">// OPERATION &mdash; 01</div>
+            <div class="detail-title">Anime Fansub Platform</div>
+            <div class="tagrow" style="margin-bottom:1rem">
+              <span class="tag"><span>HTML</span></span><span class="tag"><span>CSS</span></span><span class="tag"><span>JavaScript</span></span>
+            </div>
+            <a class="p5-btn primary" href="https://github.com/Berke-aras/AnimeFansub-Dizi-Film-Platformu" target="_blank" rel="noopener noreferrer"><span>OPEN REPOSITORY &#8599;</span></a>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// OPERATION &mdash; 02</div>
+            <div class="detail-title">HepFit</div>
+            <div class="tagrow" style="margin-bottom:1rem"><span class="tag"><span>JavaScript</span></span></div>
+            <a class="p5-btn primary" href="https://github.com/Berke-aras/HepFit" target="_blank" rel="noopener noreferrer"><span>OPEN REPOSITORY &#8599;</span></a>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// OPERATION &mdash; 03</div>
+            <div class="detail-title">Hucon Anime Awards</div>
+            <div class="tagrow" style="margin-bottom:1rem"><span class="tag"><span>JavaScript</span></span></div>
+            <a class="p5-btn primary" href="https://github.com/Berke-aras/HuconAnimeOdulleri" target="_blank" rel="noopener noreferrer"><span>OPEN REPOSITORY &#8599;</span></a>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// OPERATION &mdash; 04</div>
+            <div class="detail-title">Market Analysis App</div>
+            <div class="tagrow" style="margin-bottom:1rem"><span class="tag"><span>HTML</span></span><span class="tag"><span>JavaScript</span></span></div>
+            <a class="p5-btn primary" href="https://github.com/Berke-aras/PiyasaAnalizUygulamasi" target="_blank" rel="noopener noreferrer"><span>OPEN REPOSITORY &#8599;</span></a>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// OPERATION &mdash; 05</div>
+            <div class="detail-title">Database Teaching Platform</div>
+            <div class="tagrow" style="margin-bottom:1rem"><span class="tag"><span>HTML</span></span><span class="tag"><span>PHP</span></span></div>
+            <a class="p5-btn primary" href="https://github.com/Berke-aras/veri-tabani-ogretici" target="_blank" rel="noopener noreferrer"><span>OPEN REPOSITORY &#8599;</span></a>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// OPERATION &mdash; 06 &middot; LATEST</div>
+            <div class="detail-title">Berke ChatMate Pro</div>
+            <div class="tagrow" style="margin-bottom:1rem"><span class="tag hot"><span>TypeScript</span></span><span class="tag"><span>VS Code Extension</span></span></div>
+            <a class="p5-btn primary" href="https://github.com/Berke-aras/berke-chatmate-pro" target="_blank" rel="noopener noreferrer"><span>OPEN REPOSITORY &#8599;</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- CONTACT ---------- -->
+  <section class="screen" id="s-contact" aria-label="Contact">
+    <div class="screen-head">
+      <div class="screen-eyebrow"><span>/// 06 &mdash; NEGOTIATION</span></div>
+      <h2 class="screen-title">SEND A MESSAGE<span class="red">.</span></h2>
+    </div>
+    <div class="screen-body">
+      <div class="dual">
+        <ul class="plist dual-list" data-list="contact" role="listbox" aria-label="Contact channels">
+          <li><button class="pitem" role="option" aria-selected="true"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">01</span><span class="p-label">EMAIL</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">02</span><span class="p-label">GITHUB</span></span></span></button></li>
+          <li><button class="pitem" role="option" aria-selected="false"><span class="p-shadow"></span><span class="p-plate"><span class="p-in"><span class="p-num">03</span><span class="p-label">LINKEDIN</span></span></span></button></li>
+        </ul>
+        <div class="dual-detail" data-detail="contact">
+          <div class="detail on">
+            <div class="detail-kicker">// CHANNEL &mdash; 01</div>
+            <div class="detail-title">EMAIL</div>
+            <div class="detail-meta"><span>berkearastaman@icloud.com</span></div>
+            <a class="p5-btn primary" href="mailto:berkearastaman@icloud.com"><span>START A MISSION</span></a>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// CHANNEL &mdash; 02</div>
+            <div class="detail-title">GITHUB</div>
+            <div class="detail-meta"><span>github.com/Berke-aras</span></div>
+            <a class="p5-btn primary" href="https://github.com/Berke-aras" target="_blank" rel="noopener noreferrer"><span>OPEN PROFILE &#8599;</span></a>
+          </div>
+          <div class="detail">
+            <div class="detail-kicker">// CHANNEL &mdash; 03</div>
+            <div class="detail-title">LINKEDIN</div>
+            <div class="detail-meta"><span>ercüment-berke-arastaman</span></div>
+            <a class="p5-btn primary" href="https://www.linkedin.com/in/ercüment-berke-arastaman-98043a1b7" target="_blank" rel="noopener noreferrer"><span>OPEN PROFILE &#8599;</span></a>
+          </div>
+          <div class="available-card" style="margin-top:1rem">
+            <div class="available-title"><span class="available-dot"></span>OPEN TO OPPORTUNITIES</div>
+            <div class="available-text">Looking for new missions. Ready to steal hearts and build dreams.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================== PROMPT BAR ============================== -->
+<footer id="promptbar">
+  <div class="pager">
+    <button class="pager-btn" id="prevBtn" aria-label="Previous screen"><span>&#9664;</span></button>
+    <div class="pager-dots" id="pagerDots" aria-hidden="true"></div>
+    <button class="pager-btn" id="nextBtn" aria-label="Next screen"><span>&#9654;</span></button>
+  </div>
+  <div class="prompts">
+    <span class="prompt desktop-only"><b>&#9664;&#9654;</b><span>SCREEN</span></span>
+    <span class="prompt desktop-only"><b>&#9650;&#9660;</b><span>SELECT</span></span>
+    <span class="prompt desktop-only"><b>ENTER</b><span>OPEN</span></span>
+    <span class="prompt desktop-only"><b>M</b><span>MENU</span></span>
+    <button class="prompt btn" id="sfxToggle" aria-pressed="true"><b>SFX</b><span id="sfxLabel">ON</span></button>
+  </div>
+</footer>
 
 <!-- ============================== P5 MAIN MENU ============================== -->
 <div class="p5menu" id="p5menu" role="dialog" aria-modal="true" aria-label="Main menu" aria-hidden="true">
@@ -951,8 +1105,7 @@
   </div>
 
   <div class="menu-body">
-    <ul class="menu-list" id="menuList" role="listbox" aria-label="Sections"></ul>
-
+    <ul class="menu-list plist" id="menuList" role="listbox" aria-label="Screens"></ul>
     <div class="menu-figure" aria-hidden="true">
       <svg class="menu-mask" viewBox="0 0 400 190">
         <g class="mask-body" style="transform-origin:200px 92px">
@@ -972,7 +1125,6 @@
       <span class="prompt desktop-only"><b>&#8593;&#8595;</b><span>SELECT</span></span>
       <span class="prompt desktop-only"><b>ENTER</b><span>CONFIRM</span></span>
       <span class="prompt desktop-only"><b>ESC</b><span>CLOSE</span></span>
-      <button class="prompt btn" id="sfxToggle" aria-pressed="true"><b>SFX</b><span id="sfxLabel">ON</span></button>
     </div>
   </div>
 
@@ -985,201 +1137,6 @@
   <div class="cutin-bar"></div><div class="cutin-bar"></div>
 </div>
 
-<!-- ============================== NAV ============================== -->
-<nav id="navbar">
-  <div class="nav-logo">BA.</div>
-  <ul class="nav-links">
-    <li><a href="#hero" data-num="01"><span>HOME</span></a></li>
-    <li><a href="#about" data-num="02"><span>ABOUT</span></a></li>
-    <li><a href="#skills" data-num="03"><span>SKILLS</span></a></li>
-    <li><a href="#experience" data-num="04"><span>EXP</span></a></li>
-    <li><a href="#projects" data-num="05"><span>PROJECTS</span></a></li>
-    <li><a href="#contact" data-num="06"><span>CONTACT</span></a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="menu-trigger hint" id="menuTrigger" aria-haspopup="dialog" aria-controls="p5menu">
-      <span class="mt-bars"><i></i><i></i><i></i></span>
-      <span>MENU</span>
-    </button>
-  </div>
-</nav>
-
-<!-- ============================== HERO ============================== -->
-<section id="hero">
-  <div class="hero-bg-text">PHANTOM</div>
-  <div class="hero-slash"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow"><span>SOFTWARE DEVELOPER &amp; iOS ENGINEER</span></div>
-    <h1 class="hero-name">
-      <span class="name-line">ERC&#220;MENT</span>
-      <span class="name-line red">BERKE</span>
-      <span class="name-line">ARASTAMAN</span>
-    </h1>
-    <p class="hero-sub">Crafting experiences. Building realities.</p>
-    <div class="hero-btns">
-      <button class="p5-btn primary" id="heroMenuBtn"><span>OPEN THE MENU</span></button>
-      <a href="#projects" class="p5-btn secondary"><span>VIEW WORK</span></a>
-    </div>
-  </div>
-  <div class="hero-card-wrap">
-    <div class="pt-card" title="Hover to flip">
-      <div class="pt-card-front">
-        <div class="pt-card-eye">
-          <svg viewBox="0 0 400 190" aria-hidden="true">
-            <path fill="#e60012" fill-rule="evenodd" d="
-              M8,60 L96,20 L200,4 L304,20 L392,60 L348,122 L278,168 L200,180 L122,168 L52,122 Z
-              M66,74 L132,54 L186,82 L168,114 L102,118 L70,98 Z
-              M334,74 L268,54 L214,82 L232,114 L298,118 L330,98 Z"/>
-          </svg>
-        </div>
-        <div class="pt-card-name">BERKE</div>
-        <div class="pt-card-role">iOS &middot; WEB &middot; AI</div>
-        <div class="pt-card-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      </div>
-      <div class="pt-card-back">
-        <div class="card-back-symbol">&#9876;</div>
-        <div class="card-back-title">PHANTOM</div>
-        <div class="card-back-title">THIEF</div>
-        <div class="card-back-sub">CONFIDENTIAL</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== ABOUT ============================== -->
-<section id="about">
-  <div class="section-eyebrow"><span>/// 02 &mdash; STATUS</span></div>
-  <h2 class="section-title reveal">WHO AM I<span class="red">?</span></h2>
-  <div class="title-rule"></div>
-  <div class="about-grid">
-    <div class="about-text reveal">
-      <p>A <span class="hl">motivated and versatile Software Developer</span> with a strong academic foundation in Computer Education and Instructional Technologies.</p>
-      <p>I apply my expertise in <span class="hl">web development</span> (HTML5, CSS, JavaScript, PHP), <span class="hl">iOS mobile development</span> (Swift), and <span class="hl">AI data preprocessing</span> to innovative projects that create real impact.</p>
-      <div class="about-stats">
-        <div class="stat-box reveal reveal-delay-1"><div class="stat-num" data-count="3">0</div><div class="stat-label">Years Coding</div></div>
-        <div class="stat-box reveal reveal-delay-2"><div class="stat-num" data-count="44">0</div><div class="stat-label">GitHub Repos</div></div>
-        <div class="stat-box reveal reveal-delay-3"><div class="stat-num" data-count="432" data-suffix="h">0</div><div class="stat-label">Training Hrs</div></div>
-      </div>
-    </div>
-    <div class="profile-card reveal reveal-delay-1">
-      <div class="profile-card-header">// PROFILE DATA</div>
-      <div class="profile-row"><span class="profile-key">NAME</span><span class="profile-val">Ercüment Berke Arastaman</span></div>
-      <div class="profile-row"><span class="profile-key">LOCATION</span><span class="profile-val">Ankara, Türkiye</span></div>
-      <div class="profile-row"><span class="profile-key">EDUCATION</span><span class="profile-val">CEIT — Hacettepe University</span></div>
-      <div class="profile-row"><span class="profile-key">GRADUATION</span><span class="profile-val">Expected 2026</span></div>
-      <div class="profile-row"><span class="profile-key">LANGUAGES</span><span class="profile-val">Turkish · English (Advanced)</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== SKILLS ============================== -->
-<section id="skills">
-  <div class="section-eyebrow"><span>/// 03 &mdash; ARSENAL</span></div>
-  <h2 class="section-title reveal">ARSENAL<span class="red">.</span></h2>
-  <div class="title-rule"></div>
-  <div class="skills-grid">
-    <div class="skill-cat reveal">
-      <div class="skill-cat-header"><span class="skill-cat-num">01</span><span class="skill-cat-title">MOBILE &amp; FRONTEND</span></div>
-      <div class="skill-tags">
-        <span class="skill-tag hot"><span>Swift</span></span><span class="skill-tag hot"><span>iOS Dev</span></span>
-        <span class="skill-tag"><span>HTML5</span></span><span class="skill-tag"><span>CSS</span></span>
-        <span class="skill-tag"><span>JavaScript</span></span><span class="skill-tag"><span>React.js</span></span>
-      </div>
-    </div>
-    <div class="skill-cat reveal reveal-delay-1">
-      <div class="skill-cat-header"><span class="skill-cat-num">02</span><span class="skill-cat-title">BACKEND &amp; DATA</span></div>
-      <div class="skill-tags">
-        <span class="skill-tag"><span>PHP</span></span><span class="skill-tag"><span>Node.js</span></span>
-        <span class="skill-tag"><span>AJAX</span></span><span class="skill-tag"><span>Data Preprocessing</span></span>
-      </div>
-    </div>
-    <div class="skill-cat reveal reveal-delay-2">
-      <div class="skill-cat-header"><span class="skill-cat-num">03</span><span class="skill-cat-title">DESIGN &amp; PROCESS</span></div>
-      <div class="skill-tags">
-        <span class="skill-tag"><span>UI/UX Design</span></span><span class="skill-tag"><span>Responsive Design</span></span>
-        <span class="skill-tag"><span>SDLC</span></span>
-      </div>
-    </div>
-    <div class="skill-cat reveal reveal-delay-3">
-      <div class="skill-cat-header"><span class="skill-cat-num">04</span><span class="skill-cat-title">SOFT SKILLS</span></div>
-      <div class="skill-tags">
-        <span class="skill-tag"><span>Team Collaboration</span></span><span class="skill-tag"><span>Event Management</span></span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== EXPERIENCE ============================== -->
-<section id="experience">
-  <div class="section-eyebrow"><span>/// 04 &mdash; CONFIDANTS</span></div>
-  <h2 class="section-title reveal">CONFIDENTIAL FILES<span class="red">.</span></h2>
-  <div class="title-rule"></div>
-  <div class="exp-timeline">
-    <div class="exp-item" data-idx="01">
-      <div class="exp-card">
-        <div class="exp-header"><div class="exp-title">iOS Developer</div><div class="exp-date"><span>Oct 2025 — Present</span></div></div>
-        <div class="exp-company">Self Employed · Remote</div>
-        <ul class="exp-list"><li>Designing and implementing clean, maintainable code architectures for iOS.</li><li>Building interfaces prioritising exceptional user experience.</li><li>Post-release performance monitoring, debugging, and version updates.</li></ul>
-      </div>
-    </div>
-    <div class="exp-item" data-idx="02">
-      <div class="exp-card">
-        <div class="exp-header"><div class="exp-title">TEYE Web Platform Developer</div><div class="exp-date"><span>Feb 2025 — Jul 2025</span></div></div>
-        <div class="exp-company">Hacettepe University · Ankara</div>
-        <ul class="exp-list"><li>Developed user-friendly interfaces using HTML5, CSS, and JavaScript.</li><li>Architected dynamic data flows and server-side operations with PHP.</li><li>Implemented AJAX integration to minimise page reloads.</li></ul>
-      </div>
-    </div>
-    <div class="exp-item" data-idx="03">
-      <div class="exp-card">
-        <div class="exp-header"><div class="exp-title">AI Data Preprocessing Intern</div><div class="exp-date"><span>Jul 2024 — Aug 2024</span></div></div>
-        <div class="exp-company">SA İNOVASYON · Ankara</div>
-        <ul class="exp-list"><li>Performed audio segmentation and isolation for analysis.</li><li>Optimised AI model training datasets by improving audio quality.</li><li>Contributed to high-quality data architecture for AI model backbone.</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== PROJECTS ============================== -->
-<section id="projects">
-  <div class="section-eyebrow"><span>/// 05 &mdash; OPERATIONS</span></div>
-  <h2 class="section-title reveal">OPERATIONS<span class="red">.</span></h2>
-  <div class="title-rule"></div>
-  <div class="projects-grid">
-    <a href="https://github.com/Berke-aras/AnimeFansub-Dizi-Film-Platformu" target="_blank" rel="noopener noreferrer" class="project-card reveal"><div class="proj-num">01</div><div class="proj-title">Anime Fansub Platform</div><div class="proj-tech">HTML · CSS · JavaScript</div><div class="proj-arrow">&#8594;</div></a>
-    <a href="https://github.com/Berke-aras/HepFit" target="_blank" rel="noopener noreferrer" class="project-card reveal reveal-delay-1"><div class="proj-num">02</div><div class="proj-title">HepFit</div><div class="proj-tech">JavaScript</div><div class="proj-arrow">&#8594;</div></a>
-    <a href="https://github.com/Berke-aras/HuconAnimeOdulleri" target="_blank" rel="noopener noreferrer" class="project-card reveal reveal-delay-2"><div class="proj-num">03</div><div class="proj-title">Hucon Anime Awards</div><div class="proj-tech">JavaScript</div><div class="proj-arrow">&#8594;</div></a>
-    <a href="https://github.com/Berke-aras/PiyasaAnalizUygulamasi" target="_blank" rel="noopener noreferrer" class="project-card reveal"><div class="proj-num">04</div><div class="proj-title">Market Analysis App</div><div class="proj-tech">HTML · JavaScript</div><div class="proj-arrow">&#8594;</div></a>
-    <a href="https://github.com/Berke-aras/veri-tabani-ogretici" target="_blank" rel="noopener noreferrer" class="project-card reveal reveal-delay-1"><div class="proj-num">05</div><div class="proj-title">Database Teaching Platform</div><div class="proj-tech">HTML · PHP</div><div class="proj-arrow">&#8594;</div></a>
-    <a href="https://github.com/Berke-aras/berke-chatmate-pro" target="_blank" rel="noopener noreferrer" class="project-card reveal reveal-delay-2"><div class="proj-num">06</div><div class="proj-title">Berke ChatMate Pro</div><div class="proj-tech">TypeScript · VS Code Extension</div><div class="proj-arrow">&#8594;</div><div class="proj-badge"><span>LATEST</span></div></a>
-  </div>
-  <div class="projects-cta"><a href="https://github.com/Berke-aras" target="_blank" rel="noopener noreferrer" class="p5-btn secondary"><span>ALL PROJECTS ON GITHUB</span></a></div>
-</section>
-
-<!-- ============================== CONTACT ============================== -->
-<section id="contact">
-  <div class="section-eyebrow"><span>/// 06 &mdash; NEGOTIATION</span></div>
-  <h2 class="section-title reveal">SEND A MESSAGE<span class="red">.</span></h2>
-  <div class="title-rule"></div>
-  <div class="contact-grid">
-    <div class="contact-items">
-      <a href="mailto:berkearastaman@icloud.com" class="contact-item reveal"><div class="contact-icon-wrap">&#9993;</div><div class="contact-info"><div class="contact-label">EMAIL</div><div class="contact-val">berkearastaman@icloud.com</div></div><div class="contact-arrow-right">&#8594;</div></a>
-      <a href="https://github.com/Berke-aras" target="_blank" rel="noopener noreferrer" class="contact-item reveal reveal-delay-1"><div class="contact-icon-wrap">GH</div><div class="contact-info"><div class="contact-label">GITHUB</div><div class="contact-val">github.com/Berke-aras</div></div><div class="contact-arrow-right">&#8594;</div></a>
-      <a href="https://www.linkedin.com/in/ercüment-berke-arastaman-98043a1b7" target="_blank" rel="noopener noreferrer" class="contact-item reveal reveal-delay-2"><div class="contact-icon-wrap">in</div><div class="contact-info"><div class="contact-label">LINKEDIN</div><div class="contact-val">ercüment-berke-arastaman</div></div><div class="contact-arrow-right">&#8594;</div></a>
-    </div>
-    <div class="available-card reveal reveal-delay-1">
-      <div class="available-title"><span class="available-dot"></span>OPEN TO OPPORTUNITIES</div>
-      <div class="available-text">Looking for new missions. Ready to steal hearts and build dreams.</div>
-      <a href="mailto:berkearastaman@icloud.com" class="p5-btn primary"><span>START A MISSION</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== FOOTER ============================== -->
-<footer>
-  <div class="footer-left">&copy; 2026 ERC&#220;MENT BERKE ARASTAMAN</div>
-  <div class="footer-right">ANKARA &middot; T&#220;RKIYE</div>
-</footer>
-
 <script>
 (function () {
   'use strict';
@@ -1187,10 +1144,10 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ==============================================================
-     MENU DATA — one source of truth for the P5 main menu
+     SCREENS — the whole site is these six menu destinations
      ============================================================== */
-  const ENTRIES = [
-    { id: 'hero',       label: 'HOME',       sub: 'SAFEHOUSE',   desc: 'Back to the top. Ercüment Berke Arastaman — software developer, iOS engineer, phantom thief of clean code.' },
+  const SCREENS = [
+    { id: 'home',       label: 'HOME',       sub: 'SAFEHOUSE',   desc: 'Ercüment Berke Arastaman — software developer, iOS engineer, phantom thief of clean code.' },
     { id: 'about',      label: 'ABOUT',      sub: 'STATUS',      desc: 'Confidential profile data. Background, education, and the numbers behind the codename.' },
     { id: 'skills',     label: 'SKILLS',     sub: 'ARSENAL',     desc: 'The full loadout — Swift and iOS, the web stack, and the tools used on every infiltration.' },
     { id: 'experience', label: 'EXPERIENCE', sub: 'CONFIDANTS',  desc: 'Mission history. Roles held, teams joined, and what was shipped in each of them.' },
@@ -1199,7 +1156,7 @@
   ];
 
   /* ==============================================================
-     MENU SFX — synthesised, no assets, only ever on user input
+     SFX — synthesised, only ever fired from user input
      ============================================================== */
   const sfx = (function () {
     let ctx = null, enabled = true;
@@ -1235,84 +1192,9 @@
   })();
 
   /* ==============================================================
-     BUILD THE MENU
+     CUT-IN
      ============================================================== */
-  const menu     = document.getElementById('p5menu');
-  const list     = document.getElementById('menuList');
-  const descEl   = document.getElementById('menuDesc');
-  const trigger  = document.getElementById('menuTrigger');
-  const closeBtn = document.getElementById('menuClose');
-  const cutin    = document.getElementById('cutin');
-  let cursorIdx  = 0;
-  let menuOpen   = false;
-  let lastFocus  = null;
-
-  ENTRIES.forEach((e, i) => {
-    const li = document.createElement('li');
-    li.className = 'menu-item';
-    li.style.setProperty('--i', i);
-    li.dataset.target = e.id;
-    li.dataset.index = i;
-    li.setAttribute('role', 'option');
-    li.setAttribute('aria-selected', 'false');
-    li.innerHTML =
-      '<span class="mi-shadow"></span>' +
-      '<span class="mi-plate"><span class="mi-in">' +
-        '<span class="mi-num">' + String(i + 1).padStart(2, '0') + '</span>' +
-        '<span class="mi-label"></span>' +
-        '<span class="mi-sub"></span>' +
-      '</span></span>';
-    li.querySelector('.mi-label').textContent = e.label;
-    li.querySelector('.mi-sub').textContent = e.sub;
-    list.appendChild(li);
-  });
-  const items = Array.from(list.children);
-
-  function select(i, quiet) {
-    const n = ENTRIES.length;
-    cursorIdx = ((i % n) + n) % n;
-    items.forEach((el, k) => {
-      const on = k === cursorIdx;
-      el.classList.toggle('sel', on);
-      el.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    descEl.innerHTML = '';
-    const s = document.createElement('span');
-    s.textContent = ENTRIES[cursorIdx].desc;
-    descEl.appendChild(s);
-    descEl.classList.remove('flip');
-    void descEl.offsetWidth;              // restart the flip animation
-    descEl.classList.add('flip');
-    if (!quiet) sfx.move();
-  }
-
-  /* --- open / close --- */
-  function openMenu() {
-    if (menuOpen) return;
-    menuOpen = true;
-    lastFocus = document.activeElement;
-    menu.classList.add('open');
-    menu.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    trigger.classList.remove('hint');
-    // restart the staggered entrance every time the menu is summoned
-    items.forEach(el => { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; });
-    select(cursorIdx, true);
-    sfx.open();
-    closeBtn.focus({ preventScroll: true });
-  }
-
-  function closeMenu(silent) {
-    if (!menuOpen) return;
-    menuOpen = false;
-    menu.classList.remove('open');
-    menu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    if (!silent) sfx.close();
-    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
-  }
-
-  /* --- the all-out-attack wipe, then travel --- */
+  const cutin = document.getElementById('cutin');
   function fireCutin(then) {
     if (reduceMotion) { then(); return; }
     cutin.classList.remove('fire');
@@ -1322,81 +1204,281 @@
     setTimeout(() => cutin.classList.remove('fire'), 900);
   }
 
-  function confirmSelection() {
-    const target = document.getElementById(ENTRIES[cursorIdx].id);
-    sfx.confirm();
-    fireCutin(() => {
-      closeMenu(true);
-      if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  /* ==============================================================
+     SCREEN ROUTER — no scrolling; screens swap in place
+     ============================================================== */
+  const stage    = document.getElementById('stage');
+  const screens  = SCREENS.map(s => document.getElementById('s-' + s.id));
+  const tbNum    = document.getElementById('tbNum');
+  const tbName   = document.getElementById('tbName');
+  const dotsWrap = document.getElementById('pagerDots');
+  let current = -1;
+  let busy = false;
+
+  SCREENS.forEach(() => dotsWrap.appendChild(document.createElement('i')));
+  const dots = Array.from(dotsWrap.children);
+
+  function paint(i) {
+    screens.forEach((el, k) => {
+      const on = k === i;
+      el.classList.toggle('on', on);
+      el.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
+    dots.forEach((d, k) => d.classList.toggle('on', k === i));
+    tbNum.textContent = String(i + 1).padStart(2, '0');
+    tbName.textContent = SCREENS[i].sub;
+    document.title = SCREENS[i].label + ' — Berke Arastaman';
+    if (location.hash.slice(1) !== SCREENS[i].id) {
+      history.replaceState(null, '', '#' + SCREENS[i].id);
+    }
+    if (SCREENS[i].id === 'about') runCounters();
   }
 
-  /* --- pointer --- */
-  items.forEach(el => {
-    const idx = Number(el.dataset.index);
-    el.addEventListener('mouseenter', () => { if (idx !== cursorIdx) select(idx); });
-    el.addEventListener('click', () => { select(idx, true); confirmSelection(); });
+  function goTo(i, opts) {
+    const n = SCREENS.length;
+    const next = ((i % n) + n) % n;
+    if (next === current || busy) return;
+    const first = current === -1;
+    current = next;
+    if (first || (opts && opts.instant) || reduceMotion) { paint(next); return; }
+    busy = true;
+    fireCutin(() => paint(next));
+    setTimeout(() => { busy = false; }, 620);
+  }
+
+  const byId = id => SCREENS.findIndex(s => s.id === id);
+  document.getElementById('prevBtn').addEventListener('click', () => { sfx.move(); goTo(current - 1); });
+  document.getElementById('nextBtn').addEventListener('click', () => { sfx.move(); goTo(current + 1); });
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    el.addEventListener('click', () => { sfx.confirm(); goTo(byId(el.dataset.goto)); });
+  });
+
+  /* ==============================================================
+     LIST CONTROLLERS — every list on the site behaves like the menu
+     ============================================================== */
+  const lists = {};
+  document.querySelectorAll('[data-list]').forEach(listEl => {
+    const key = listEl.dataset.list;
+    const items = Array.from(listEl.querySelectorAll('.pitem'));
+    const details = Array.from(document.querySelector('[data-detail="' + key + '"]').querySelectorAll('.detail'));
+    const state = { idx: 0, items, details };
+
+    function select(i, quiet) {
+      const n = items.length;
+      state.idx = ((i % n) + n) % n;
+      items.forEach((el, k) => {
+        const on = k === state.idx;
+        el.classList.toggle('sel', on);
+        el.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      details.forEach((el, k) => el.classList.toggle('on', k === state.idx));
+      if (!quiet) sfx.move();
+    }
+    state.select = select;
+
+    items.forEach((el, k) => {
+      el.addEventListener('mouseenter', () => { if (k !== state.idx) select(k); });
+      el.addEventListener('focus', () => { if (k !== state.idx) select(k, true); });
+      el.addEventListener('click', () => { select(k, true); sfx.confirm(); openCurrent(key); });
+    });
+
+    lists[key] = state;
+    select(0, true);
+  });
+
+  // Enter on a list row follows the detail panel's primary link
+  function openCurrent(key) {
+    const st = lists[key]; if (!st) return;
+    const link = st.details[st.idx].querySelector('a[href]');
+    if (!link) return;
+    if (link.target === '_blank') window.open(link.href, '_blank', 'noopener');
+    else window.location.href = link.href;
+  }
+
+  function activeList() {
+    const el = screens[current];
+    const l = el && el.querySelector('[data-list]');
+    return l ? lists[l.dataset.list] : null;
+  }
+
+  /* ==============================================================
+     P5 MAIN MENU
+     ============================================================== */
+  const menu     = document.getElementById('p5menu');
+  const menuList = document.getElementById('menuList');
+  const menuDesc = document.getElementById('menuDesc');
+  const trigger  = document.getElementById('menuTrigger');
+  const closeBtn = document.getElementById('menuClose');
+  let menuIdx = 0, menuOpen = false, lastFocus = null;
+
+  SCREENS.forEach((e, i) => {
+    const li = document.createElement('li');
+    li.className = 'menu-item';
+    li.style.setProperty('--i', i);
+    const b = document.createElement('button');
+    b.className = 'pitem';
+    b.setAttribute('role', 'option');
+    b.setAttribute('aria-selected', 'false');
+    b.dataset.index = i;
+    b.innerHTML =
+      '<span class="p-shadow"></span>' +
+      '<span class="p-plate"><span class="p-in">' +
+        '<span class="p-num">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<span class="p-label"></span><span class="p-sub"></span>' +
+      '</span></span>';
+    b.querySelector('.p-label').textContent = e.label;
+    b.querySelector('.p-sub').textContent = e.sub;
+    li.appendChild(b);
+    menuList.appendChild(li);
+  });
+  const menuItems = Array.from(menuList.querySelectorAll('.pitem'));
+
+  function menuSelect(i, quiet) {
+    const n = SCREENS.length;
+    menuIdx = ((i % n) + n) % n;
+    menuItems.forEach((el, k) => {
+      const on = k === menuIdx;
+      el.parentElement.classList.toggle('sel', on);
+      el.classList.toggle('sel', on);
+      el.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    menuDesc.innerHTML = '';
+    const s = document.createElement('span');
+    s.textContent = SCREENS[menuIdx].desc;
+    menuDesc.appendChild(s);
+    menuDesc.classList.remove('flip');
+    void menuDesc.offsetWidth;
+    menuDesc.classList.add('flip');
+    if (!quiet) sfx.move();
+  }
+
+  function openMenu() {
+    if (menuOpen) return;
+    menuOpen = true;
+    lastFocus = document.activeElement;
+    menu.classList.add('open');
+    menu.setAttribute('aria-hidden', 'false');
+    trigger.classList.remove('hint');
+    menuItems.forEach(el => { const p = el.parentElement; p.style.animation = 'none'; void p.offsetWidth; p.style.animation = ''; });
+    menuSelect(current, true);
+    sfx.open();
+    closeBtn.focus({ preventScroll: true });
+  }
+
+  function closeMenu(silent) {
+    if (!menuOpen) return;
+    menuOpen = false;
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true');
+    if (!silent) sfx.close();
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+
+  function menuConfirm() {
+    sfx.confirm();
+    const target = menuIdx;
+    closeMenu(true);
+    goTo(target);
+  }
+
+  menuItems.forEach(el => {
+    const i = Number(el.dataset.index);
+    el.addEventListener('mouseenter', () => { if (i !== menuIdx) menuSelect(i); });
+    el.addEventListener('click', () => { menuSelect(i, true); menuConfirm(); });
   });
 
   trigger.addEventListener('click', openMenu);
   closeBtn.addEventListener('click', () => closeMenu());
-  const heroMenuBtn = document.getElementById('heroMenuBtn');
-  if (heroMenuBtn) heroMenuBtn.addEventListener('click', openMenu);
-
-  // clicking the backdrop (not the list or footer) closes
+  document.getElementById('homeMenuBtn').addEventListener('click', openMenu);
   menu.addEventListener('click', e => {
     if (e.target === menu || e.target.classList.contains('menu-bg') ||
-        e.target.classList.contains('menu-stripes') || e.target.classList.contains('menu-halftone')) {
-      closeMenu();
-    }
+        e.target.classList.contains('menu-stripes') || e.target.classList.contains('menu-halftone')) closeMenu();
   });
 
-  /* --- keyboard: the menu is driven like a console menu --- */
+  /* ==============================================================
+     KEYBOARD — one console-style scheme for the whole site
+     ============================================================== */
   document.addEventListener('keydown', e => {
-    if (!menuOpen) {
-      if ((e.key === 'm' || e.key === 'M') && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) {
-        e.preventDefault(); openMenu();
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+
+    if (menuOpen) {
+      switch (e.key) {
+        case 'ArrowDown': case 'ArrowRight': case 's': case 'S':
+          e.preventDefault(); menuSelect(menuIdx + 1); break;
+        case 'ArrowUp': case 'ArrowLeft': case 'w': case 'W':
+          e.preventDefault(); menuSelect(menuIdx - 1); break;
+        case 'Home': e.preventDefault(); menuSelect(0); break;
+        case 'End':  e.preventDefault(); menuSelect(SCREENS.length - 1); break;
+        case 'Enter': case ' ': e.preventDefault(); menuConfirm(); break;
+        case 'Escape': case 'Backspace': e.preventDefault(); closeMenu(); break;
+        default:
+          if (/^[1-6]$/.test(e.key)) { e.preventDefault(); menuSelect(Number(e.key) - 1, true); menuConfirm(); }
       }
       return;
     }
+
+    if (typing) return;
+    const st = activeList();
     switch (e.key) {
-      case 'ArrowDown': case 'ArrowRight': case 's': case 'S':
-        e.preventDefault(); select(cursorIdx + 1); break;
-      case 'ArrowUp': case 'ArrowLeft': case 'w': case 'W':
-        e.preventDefault(); select(cursorIdx - 1); break;
-      case 'Home':  e.preventDefault(); select(0); break;
-      case 'End':   e.preventDefault(); select(ENTRIES.length - 1); break;
-      case 'Enter': case ' ':
-        e.preventDefault(); confirmSelection(); break;
-      case 'Escape': case 'Backspace':
-        e.preventDefault(); closeMenu(); break;
+      case 'm': case 'M': case 'Escape':
+        e.preventDefault(); openMenu(); break;
+      case 'ArrowRight': case 'd': case 'D': case 'PageDown':
+        e.preventDefault(); sfx.move(); goTo(current + 1); break;
+      case 'ArrowLeft': case 'a': case 'A': case 'PageUp':
+        e.preventDefault(); sfx.move(); goTo(current - 1); break;
+      case 'ArrowDown': case 's': case 'S':
+        if (st) { e.preventDefault(); st.select(st.idx + 1); } break;
+      case 'ArrowUp': case 'w': case 'W':
+        if (st) { e.preventDefault(); st.select(st.idx - 1); } break;
+      case 'Enter':
+        if (st && document.activeElement === document.body) {
+          e.preventDefault(); sfx.confirm();
+          openCurrent(screens[current].querySelector('[data-list]').dataset.list);
+        }
+        break;
       default:
-        if (/^[1-6]$/.test(e.key)) { e.preventDefault(); select(Number(e.key) - 1, true); confirmSelection(); }
+        if (/^[1-6]$/.test(e.key)) { e.preventDefault(); sfx.confirm(); goTo(Number(e.key) - 1); }
     }
   });
 
-  /* --- wheel scrolls the cursor, not the page --- */
+  /* ==============================================================
+     WHEEL + TOUCH — a wheel or swipe moves the cursor or the screen,
+     it never scrolls the document (there is nothing to scroll).
+     ============================================================== */
   let wheelLock = false;
-  menu.addEventListener('wheel', e => {
-    if (!menuOpen) return;
-    e.preventDefault();
+  window.addEventListener('wheel', e => {
+    if (e.target.closest('.detail')) return;      // let a tall detail panel scroll itself
     if (wheelLock) return;
     wheelLock = true;
-    select(cursorIdx + (e.deltaY > 0 ? 1 : -1));
-    setTimeout(() => { wheelLock = false; }, 130);
-  }, { passive: false });
-
-  /* --- swipe on touch --- */
-  let touchY = null;
-  menu.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
-  menu.addEventListener('touchmove', e => {
-    if (touchY === null) return;
-    const dy = touchY - e.touches[0].clientY;
-    if (Math.abs(dy) > 44) { select(cursorIdx + (dy > 0 ? 1 : -1)); touchY = e.touches[0].clientY; }
+    setTimeout(() => { wheelLock = false; }, 220);
+    if (menuOpen) { menuSelect(menuIdx + (e.deltaY > 0 ? 1 : -1)); return; }
+    const st = activeList();
+    if (st) st.select(st.idx + (e.deltaY > 0 ? 1 : -1));
+    else { sfx.move(); goTo(current + (e.deltaY > 0 ? 1 : -1)); }
   }, { passive: true });
-  menu.addEventListener('touchend', () => { touchY = null; }, { passive: true });
 
-  /* --- SFX toggle --- */
+  let tx = 0, ty = 0, swiped = false;
+  window.addEventListener('touchstart', e => {
+    tx = e.touches[0].clientX; ty = e.touches[0].clientY; swiped = false;
+  }, { passive: true });
+  window.addEventListener('touchmove', e => {
+    if (swiped) return;
+    const dx = e.touches[0].clientX - tx, dy = e.touches[0].clientY - ty;
+    if (Math.abs(dx) < 55 && Math.abs(dy) < 45) return;
+    swiped = true;
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (menuOpen) return;
+      sfx.move(); goTo(current + (dx < 0 ? 1 : -1));       // swipe left = next screen
+    } else {
+      if (e.target.closest('.detail')) return;
+      if (menuOpen) menuSelect(menuIdx + (dy < 0 ? 1 : -1));
+      else { const st = activeList(); if (st) st.select(st.idx + (dy < 0 ? 1 : -1)); }
+    }
+  }, { passive: true });
+
+  /* ==============================================================
+     SFX TOGGLE
+     ============================================================== */
   const sfxBtn = document.getElementById('sfxToggle');
   const sfxLabel = document.getElementById('sfxLabel');
   sfxBtn.addEventListener('click', e => {
@@ -1407,10 +1489,29 @@
     if (sfx.enabled) sfx.move();
   });
 
-  select(0, true);
+  /* ==============================================================
+     COUNT-UP — runs when the ABOUT screen is entered
+     ============================================================== */
+  let counted = false;
+  function runCounters() {
+    if (counted) return;
+    counted = true;
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      if (reduceMotion) { el.textContent = target + suffix; return; }
+      const dur = 1400, step = 16, inc = target / (dur / step);
+      let val = 0;
+      const t = setInterval(() => {
+        val = Math.min(val + inc, target);
+        el.textContent = Math.floor(val) + suffix;
+        if (val >= target) { el.textContent = target + suffix; clearInterval(t); }
+      }, step);
+    });
+  }
 
   /* ==============================================================
-     MENU CALENDAR — P5 always shows the date
+     MENU CALENDAR
      ============================================================== */
   const now = new Date();
   const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -1429,21 +1530,28 @@
       mx = e.clientX; my = e.clientY;
       cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
     }, { passive: true });
-    (function ringLoop() {
+    (function loop() {
       rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
       ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-      requestAnimationFrame(ringLoop);
+      requestAnimationFrame(loop);
     })();
     document.addEventListener('mouseover', e => {
-      const hot = e.target.closest('a, button, .project-card, .contact-item, .pt-card, .menu-item, .skill-tag');
+      const hot = e.target.closest('a, button, .pitem, .tag, .pt-card');
       cursor.style.width = cursor.style.height = hot ? '8px' : '14px';
       ring.style.width = ring.style.height = hot ? '58px' : '40px';
     }, { passive: true });
   }
 
   /* ==============================================================
-     LOADING
+     BOOT
      ============================================================== */
+  const start = byId(location.hash.slice(1));
+  goTo(start > -1 ? start : 0, { instant: true });
+  window.addEventListener('hashchange', () => {
+    const i = byId(location.hash.slice(1));
+    if (i > -1 && i !== current) goTo(i);
+  });
+
   const loadFill = document.getElementById('loadFill');
   const loadPct  = document.getElementById('loadPct');
   const loadScr  = document.getElementById('loading-screen');
@@ -1454,71 +1562,9 @@
     loadPct.textContent = Math.floor(pct) + '%';
     if (pct >= 100) {
       clearInterval(loadTimer);
-      setTimeout(() => loadScr.classList.add('fade-out'), 260);
+      setTimeout(() => loadScr.classList.add('fade-out'), 240);
     }
   }, reduceMotion ? 20 : 75);
-
-  /* ==============================================================
-     SCROLL REVEAL
-     ============================================================== */
-  const revealObs = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (en.isIntersecting) { en.target.classList.add('revealed'); revealObs.unobserve(en.target); }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-  const expObs = new IntersectionObserver(entries => {
-    entries.forEach((en, i) => {
-      if (en.isIntersecting) {
-        setTimeout(() => en.target.classList.add('revealed'), i * 140);
-        expObs.unobserve(en.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.exp-item').forEach(el => expObs.observe(el));
-
-  /* ==============================================================
-     COUNT-UP STATS
-     ============================================================== */
-  const countObs = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (!en.isIntersecting) return;
-      const el = en.target;
-      const target = parseInt(el.dataset.count, 10);
-      const suffix = el.dataset.suffix || '';
-      const dur = 1500, step = 16, inc = target / (dur / step);
-      let val = 0;
-      const t = setInterval(() => {
-        val = Math.min(val + inc, target);
-        el.textContent = Math.floor(val) + suffix;
-        if (val >= target) { el.textContent = target + suffix; clearInterval(t); }
-      }, step);
-      countObs.unobserve(el);
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
-
-  /* ==============================================================
-     ACTIVE NAV TAB
-     ============================================================== */
-  const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
-  const sections = ENTRIES.map(e => document.getElementById(e.id)).filter(Boolean);
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const y = window.scrollY + 120;
-      let current = sections[0];
-      sections.forEach(sec => { if (y >= sec.offsetTop) current = sec; });
-      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
-      // keep the menu cursor in sync with where the visitor actually is
-      const idx = ENTRIES.findIndex(e => e.id === current.id);
-      if (idx > -1 && !menuOpen) select(idx, true);
-      ticking = false;
-    });
-  }, { passive: true });
 })();
 </script>
 </body>
