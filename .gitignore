@@ -1,0 +1,7 @@
+# Netlify CLI local state (site link, deploy cache) — machine-specific, not shared
+.netlify/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
